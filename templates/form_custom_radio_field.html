@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group {% if field.errors %}has-error{% endif %}">
+            {% for option in options %}
+                <div class="custom-radio">
+                    <label>
+                        <input type="radio" id="id_{{field_name}}_{{option.id}}" name="{{field_name}}" value="{{option.id}}" {% if option.id == field_value %}checked="checked"{% endif %} />
+                        <span>
+                            {{option.name}}<br/><small>{{option.description}}</small>
+                        </span>
+                    </label>
+                </div>
+            {% endfor %}                
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <p class="text-danger">You must select a {{field_label}}.</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

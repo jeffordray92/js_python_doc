@@ -1,0 +1,34 @@
+{% extends "site_base.html" %}
+
+{% block head_title %}Login{% endblock %}
+
+{% block nav_login_active %}
+    class="active"
+{% endblock %}
+
+{% block page_header_title %}Login{% endblock %}
+
+{% block left_content %}
+    <div class="row">
+        <div class="col-md-6">
+            <form action='./?next={{ form.redirect_to }}' method='post'>
+                {% csrf_token %}
+                <legend>Please login to continue</legend>
+                {% with form.username as field %}
+                {% include "form_field_edit.html" %}
+                {% endwith %}
+
+                {% with form.password as field %}
+                {% include "form_field_edit.html" %}
+                {% endwith %}
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block show_alert_messages %}
+    {% if form.errors %}
+        showErrorMessage("Wrong username and/or password.");
+    {% endif %}
+{% endblock %}

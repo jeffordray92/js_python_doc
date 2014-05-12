@@ -1,0 +1,107 @@
+{% extends "profiles/settings_base.html" %}
+{% load staticfiles %}
+
+{% block head_title %}Edit Settings{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profiles/settings_update.css' %}" type="text/css" />
+{% endblock extra_css%}
+
+{% block nav_administration_active %}
+    class="active"
+{% endblock %}
+
+{% block page_header_title %}Edit Settings{% endblock %}
+
+{% block left_content %}
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> &nbsp; <strong>Bitbucket Repository</strong></div>
+        <div class="panel-body">
+            {% with form.repository_username as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.repository_consumer_key as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.repository_consumer_secret as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.repository_oauth_access_token as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.repository_oauth_access_token_secret as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.ssh_host_alias as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.test_repository_slug as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.projects_working_directory as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.default_project_folder_name as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> &nbsp; <strong>JIRA Project Management</strong></div>
+        <div class="panel-body">
+            {% with form.jira_key as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+        </div>
+    </div>
+    
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> &nbsp; <strong>Redmine Project Management</strong></div>
+        <div class="panel-body">
+            {% with form.redmine_url as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.redmine_key as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> &nbsp; <strong>Test Site</strong></div>
+        <div class="panel-body">
+            {% with form.domain_host as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.domain_user as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% with form.domain_path as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <input type="hidden" id="id_{{ form.user.name }}" name="{{ form.user.name }}" value="{{ form.instance.user.id }}" />
+
+    <div class="span2 offset9"><button type="submit" class="btn btn-primary">Update Settings</button></div>
+
+</form>
+{% endblock %}

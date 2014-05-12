@@ -1,0 +1,11 @@
+{% extends "site_base.html" %}
+
+{% block page_header_title %}ERROR 403:<br>
+<font size = 5>You don't have permission to access {{request.path}} on this server.</font>
+{% endblock %}
+
+{% block content %}
+
+<h2><font size = 2><a href="javascript:history.go(-1)">GO BACK TO PREVIOUS PAGE</a></font></h2>
+
+{% endblock %}

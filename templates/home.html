@@ -1,0 +1,65 @@
+{% extends "site_base.html" %}
+
+{% block head_title %}Home{% endblock %}
+
+{% block nav_home_active %}
+    class="active"
+{% endblock %}
+
+{% block jumbotron %}
+    <div class="jumbotron">
+        <h1><span class="text-overlay">{{ SITE_NAME }}</span></h1>
+        <p><span class="text-overlay">Tired of the <em>repetitive and tedious manual process</em> just to setup a new project? <strong>{{ SITE_NAME }}</strong> is here to provide automation so you can immediately <strong><u>jump start</u></strong> to project development with just a few clicks! Ingenious, right? Try it out now!</span></p>
+        {% if user.is_authenticated %}
+        <p><a class="btn btn-primary btn-lg" href="{% url 'project_add' %}"><span class="glyphicon glyphicon-plus"></span> &nbsp; Create a Project</a></p>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block page_header_container %}
+{% endblock %}
+
+{% block left_content %}
+    <h3>Here's what <u>JumpStart</u> <strong>can do</strong> <em>for you:</em></h3>
+    
+    <br/>
+
+    <h5>1. Create a <strong>new project</strong> and save its details in the database</h5>
+
+    <div class="clear"></div>
+
+    <blockquote>
+        <small>Choose what type of project to ceate (mobile or web)</small>
+        <small>Choose which template is to be applied to the web or mobile application created</small>
+    </blockquote>
+    
+    <div class="clear"></div>
+
+    <h5>2. Setup <strong>Project Repository</strong></h5>
+    <blockquote>
+        <small>Create project repository on Ingenuity's Bitbucket account (GIT)</small>
+        <small>Push initial commits on project repository (Commits depend on what type of project: iOS, Django and etc.)</small>
+    </blockquote>
+    
+    <div class="clear"></div>
+
+    <h5>3. Setup <strong>Project Management Tool</strong> (Redmine or JIRA)</h5>
+    <blockquote>
+        <small>Create new spaces on Redmine or Ingenuity's JIRA account, depending on which PM Tool the project requires.</small>
+    </blockquote>
+    
+    <div class="clear"></div>
+
+    <h5>4. Create a <strong>Test Site</strong></h5>
+    <blockquote>
+        <small>Create project directory on Ingenuity's server.</small>
+        <small>Create virtual environment for the project.</small>
+        <small>Install packages or dependencies for the project.</small>
+        <small>Create and assign sub-domain for the project.</small>
+        <small>Create NGINX configuration file and restart server so test site would be up and running.</small>
+    </blockquote>
+{% endblock %}
+
+{% block right_content %}
+    {% include "latest_projects.html" %}
+{% endblock %}

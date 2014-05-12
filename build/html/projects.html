@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Projects package &mdash; Jumpstart 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Jumpstart 1.0 documentation" href="index.html" />
+    <link rel="up" title="Modules" href="modules.html" />
+    <link rel="next" title="projects.exceptions module" href="projects.exceptions.html" />
+    <link rel="prev" title="Profiles package" href="profiles.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="_static/logo.png">
+          Jumpstart</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Jumpstart <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Projects package</a><ul>
+<li><a class="reference internal" href="#projects-forms-module">projects.forms module</a></li>
+<li><a class="reference internal" href="#projects-models-module">projects.models module</a></li>
+<li><a class="reference internal" href="#projects-utils-module">projects.utils module</a></li>
+<li><a class="reference internal" href="#submodules">submodules</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="profiles.html" title="Previous Chapter: Profiles package"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; Profiles package</span>
+    </a>
+  </li>
+  <li>
+    <a href="projects.exceptions.html" title="Next Chapter: projects.exceptions module"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">projects.excepti... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="projects-package">
+<h1>Projects package<a class="headerlink" href="#projects-package" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="projects-forms-module">
+<h2>projects.forms module<a class="headerlink" href="#projects-forms-module" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>projects.forms.py</strong> file handles user input in relation to <strong>Project</strong> app processes.</p>
+<span class="target" id="module-projects.forms"></span><dl class="class">
+<dt id="projects.forms.ProjectAddForm">
+<em class="property">class </em><tt class="descclassname">projects.forms.</tt><tt class="descname">ProjectAddForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em><big>)</big><a class="reference internal" href="_modules/projects/forms.html#ProjectAddForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.forms.ProjectAddForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class handled the insertion of new Project instances.</p>
+<dl class="docutils">
+<dt><strong>Class Attributes:</strong></dt>
+<dd><ul class="first last simple">
+<li><strong>name (str)</strong>: refers to the project&#8217;s name.</li>
+<li><strong>description (str)</strong>: short description about the project.</li>
+<li><strong>company (str)</strong>: company where project is affiliated to.</li>
+<li><strong>project_type (radio)</strong>: project type ranges in either Web or Mobile.</li>
+<li><strong>project_template (radio)</strong>: templates corresponding to a certain template.</li>
+<li><strong>setup_option (multiplechoicefield)</strong>: choices regarding as to what project tools to include to project.</li>
+<li><strong>setup_test_site, setup_jira, setup_redmine (boolean)</strong>: flag for setting up Project Management(PM) tools.</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="projects.forms.ProjectAddForm.create_project">
+<tt class="descname">create_project</tt><big>(</big><em>user</em><big>)</big><a class="reference internal" href="_modules/projects/forms.html#ProjectAddForm.create_project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.forms.ProjectAddForm.create_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is responsible for the backend processing of the automated project creation.
+It handles both the initialization of the project and its corresponding project tools.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>user</strong> &#8211; contains the credentials of the currently logged user which will be used to link to its corresponding project.</td>
+</tr>
+</tbody>
+</table>
+<p>Raises: <tt class="xref py py-class docutils literal"><span class="pre">ProjectSetupError</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">init_project</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="#projects.forms.ProjectAddForm.init_project" title="projects.forms.ProjectAddForm.init_project"><tt class="xref py py-func docutils literal"><span class="pre">init_project()</span></tt></a> function is called to start creation process. It is responsible for creating records related to the project (see its section for more details).</p>
+<p>Afterwhich it calls four (4) functions from the <tt class="docutils literal"><span class="pre">utils</span></tt> module which handles the creation/setup of the project tools specified by the user.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">utils</span><span class="o">.</span><span class="n">setup_repository</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_repository</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+<span class="n">utils</span><span class="o">.</span><span class="n">setup_test_site</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_test_site</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_repository</span><span class="p">)</span>
+<span class="n">utils</span><span class="o">.</span><span class="n">setup_jira_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pm_tool_jira</span><span class="p">)</span>
+<span class="n">utils</span><span class="o">.</span><span class="n">setup_redmine_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pm_tool_redmine</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Refer to <a class="reference internal" href="#module-projects.utils" title="projects.utils"><tt class="xref py py-mod docutils literal"><span class="pre">projects.utils</span></tt></a> module for more details regarding each project tool&#8217;s function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">True</span></tt> if successfully initialized, otherwise <tt class="docutils literal"><span class="pre">False</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="projects.forms.ProjectAddForm.init_pm_tool">
+<tt class="descname">init_pm_tool</tt><big>(</big><em>project</em>, <em>pm_tool_type</em>, <em>skip</em><big>)</big><a class="reference internal" href="_modules/projects/forms.html#ProjectAddForm.init_pm_tool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.forms.ProjectAddForm.init_pm_tool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Responsible for initializing the project management tool selected.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>project</strong> &#8211; The current <tt class="xref py py-class docutils literal"><span class="pre">Project</span></tt> instance.</li>
+<li><strong>pm_tool_type</strong> &#8211; Refers to the PM tool selected</li>
+<li><strong>skip</strong> &#8211; Flag if specified PM tool is to be set up or not.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Creates a <tt class="xref py py-class docutils literal"><span class="pre">ProjectManagement</span></tt> object given the following parameters.
+The resulting object is then passed as a parameter to <a class="reference internal" href="#projects.forms.ProjectAddForm.skip_setup" title="projects.forms.ProjectAddForm.skip_setup"><tt class="xref py py-func docutils literal"><span class="pre">skip_setup()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">ProjectManagement</span></tt> object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="projects.forms.ProjectAddForm.init_project">
+<tt class="descname">init_project</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/projects/forms.html#ProjectAddForm.init_project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.forms.ProjectAddForm.init_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new records with initial data for <tt class="xref py py-class docutils literal"><span class="pre">ProjectRepository</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">ProjectManagement</span></tt> and <tt class="xref py py-class docutils literal"><span class="pre">ProjectTestSite</span></tt> objects.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">project_repository</span> <span class="o">=</span> <span class="n">ProjectRepository</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">project_test_site</span> <span class="o">=</span> <span class="n">ProjectTestSite</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">pm_tool_jira</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_pm_tool</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">ProjectManagement</span><span class="o">.</span><span class="n">JIRA</span><span class="p">,</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_jira</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">pm_tool_redmine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_pm_tool</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">ProjectManagement</span><span class="o">.</span><span class="n">REDMINE</span><span class="p">,</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_redmine</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="projects.forms.ProjectAddForm.skip_setup">
+<tt class="descname">skip_setup</tt><big>(</big><em>model</em>, <em>skip</em><big>)</big><a class="reference internal" href="_modules/projects/forms.html#ProjectAddForm.skip_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.forms.ProjectAddForm.skip_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the creation of the specified PM tool is skipped.</p>
+<p>Calls <a class="reference internal" href="#projects.utils.update_setup_status_skip" title="projects.utils.update_setup_status_skip"><tt class="xref py py-func docutils literal"><span class="pre">projects.utils.update_setup_status_skip()</span></tt></a> to update its status.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="projects.forms.ProjectEditForm">
+<em class="property">class </em><tt class="descclassname">projects.forms.</tt><tt class="descname">ProjectEditForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id=u'id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=None</em>, <em>empty_permitted=False</em>, <em>instance=None</em><big>)</big><a class="reference internal" href="_modules/projects/forms.html#ProjectEditForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.forms.ProjectEditForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the editing of <tt class="xref py py-class docutils literal"><span class="pre">Project</span></tt> objects.</p>
+<dl class="docutils">
+<dt><em>Class Variables</em></dt>
+<dd><ul class="first last simple">
+<li><strong>company (str)</strong>: company where project is affiliated to.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="projects-models-module">
+<h2>projects.models module<a class="headerlink" href="#projects-models-module" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>projects.models.py</strong> file is responsible for storing and creating <strong>Project</strong>-related object instances.</p>
+<span class="target" id="module-projects.models"></span><dl class="class">
+<dt id="projects.models.Project">
+<em class="property">class </em><tt class="descclassname">projects.models.</tt><tt class="descname">Project</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/projects/models.html#Project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.Project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for the <em>project</em>.</p>
+<dl class="docutils">
+<dt><strong>Class Attributes:</strong></dt>
+<dd><ul class="first last simple">
+<li><strong>name (str)</strong>: project type&#8217;s name.</li>
+<li><strong>description (str)</strong>: project type&#8217;s short description.</li>
+<li><strong>company (str)</strong>: company a project is affiliated to.</li>
+<li><strong>project_type (fk)</strong>: a project&#8217;s type.</li>
+<li><strong>project_template (fk)</strong>: a project&#8217;s template.</li>
+<li><strong>slug (str)</strong>: a project&#8217;s slug value (for url usage).</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="projects.models.Project.get_absolute_url">
+<tt class="descname">get_absolute_url</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="reference internal" href="_modules/projects/models.html#Project.get_absolute_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.Project.get_absolute_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a url for a specified project&#8217;s detail page</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="projects.models.Project.get_edit_url">
+<tt class="descname">get_edit_url</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/projects/models.html#Project.get_edit_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.Project.get_edit_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a url for a specified project&#8217;s edit page</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="projects.models.Project.get_project_pm_tool_jira">
+<tt class="descname">get_project_pm_tool_jira</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/projects/models.html#Project.get_project_pm_tool_jira"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.Project.get_project_pm_tool_jira" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all <cite>JIRA</cite> <a class="reference internal" href="#projects.models.ProjectManagement" title="projects.models.ProjectManagement"><tt class="xref py py-class docutils literal"><span class="pre">ProjectManagement</span></tt></a> objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="projects.models.Project.get_project_pm_tool_redmine">
+<tt class="descname">get_project_pm_tool_redmine</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/projects/models.html#Project.get_project_pm_tool_redmine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.Project.get_project_pm_tool_redmine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all <cite>Redmine</cite> <a class="reference internal" href="#projects.models.ProjectManagement" title="projects.models.ProjectManagement"><tt class="xref py py-class docutils literal"><span class="pre">ProjectManagement</span></tt></a> objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="projects.models.Project.get_project_repository">
+<tt class="descname">get_project_repository</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/projects/models.html#Project.get_project_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.Project.get_project_repository" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all <a class="reference internal" href="#projects.models.ProjectRepository" title="projects.models.ProjectRepository"><tt class="xref py py-class docutils literal"><span class="pre">ProjectRepository</span></tt></a> objects</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="projects.models.Project.get_project_test_site">
+<tt class="descname">get_project_test_site</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/projects/models.html#Project.get_project_test_site"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.Project.get_project_test_site" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all <a class="reference internal" href="#projects.models.ProjectTestSite" title="projects.models.ProjectTestSite"><tt class="xref py py-class docutils literal"><span class="pre">ProjectTestSite</span></tt></a> objects</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="projects.models.ProjectManagement">
+<em class="property">class </em><tt class="descclassname">projects.models.</tt><tt class="descname">ProjectManagement</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/projects/models.html#ProjectManagement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.ProjectManagement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for the project&#8217;s setup status.</p>
+<p><strong>Constants:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre>JIRA = &#39;J&#39;
+REDMINE = &#39;R&#39;
+PM_TOOL_CHOICES = (
+    (JIRA, &#39;Jira&#39;),
+    (REDMINE, &#39;Redmine&#39;),
+)&#39;
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><em>Class Attributes:</em></dt>
+<dd><ul class="first last simple">
+<li><strong>project (fk)</strong>: <a class="reference internal" href="#projects.models.Project" title="projects.models.Project"><tt class="xref py py-class docutils literal"><span class="pre">Project</span></tt></a> instance.</li>
+<li><strong>pm_tool (str)</strong>: PM tool to be used. Based on <tt class="docutils literal"><span class="pre">PM_TOOL_CHOICES</span></tt>.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="projects.models.ProjectRepository">
+<em class="property">class </em><tt class="descclassname">projects.models.</tt><tt class="descname">ProjectRepository</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/projects/models.html#ProjectRepository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.ProjectRepository" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for the project&#8217;s setup status.</p>
+<dl class="docutils">
+<dt><strong>Class Attributes:</strong></dt>
+<dd><ul class="first last simple">
+<li><strong>project (fk)</strong>: <a class="reference internal" href="#projects.models.Project" title="projects.models.Project"><tt class="xref py py-class docutils literal"><span class="pre">Project</span></tt></a> instance.</li>
+<li><strong>repo_https (url)</strong>: Bitbucket repository&#8217;s HTTPS url.</li>
+<li><strong>repo_ssh (str)</strong>: Bitbucket repository&#8217;s SSH url.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="projects.models.ProjectSetupStatus">
+<em class="property">class </em><tt class="descclassname">projects.models.</tt><tt class="descname">ProjectSetupStatus</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/projects/models.html#ProjectSetupStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.ProjectSetupStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for the project&#8217;s <em>setup status</em>.</p>
+<p><strong>Constants:</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NEW</span> <span class="o">=</span> <span class="s">&#39;N&#39;</span>
+<span class="n">SKIP</span> <span class="o">=</span> <span class="s">&#39;S&#39;</span>
+<span class="n">WORKING</span> <span class="o">=</span> <span class="s">&#39;W&#39;</span>
+<span class="n">FAILED</span> <span class="o">=</span> <span class="s">&#39;F&#39;</span>
+<span class="n">DONE</span> <span class="o">=</span> <span class="s">&#39;D&#39;</span>
+<span class="n">STATUS_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="n">NEW</span><span class="p">,</span> <span class="s">&#39;New&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">SKIP</span><span class="p">,</span> <span class="s">&#39;Skip&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">WORKING</span><span class="p">,</span> <span class="s">&#39;Working&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">FAILED</span><span class="p">,</span> <span class="s">&#39;Failed&#39;</span><span class="p">),</span>
+    <span class="p">(</span><span class="n">DONE</span><span class="p">,</span> <span class="s">&#39;Done&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><strong>Class Attributes:</strong></dt>
+<dd><ul class="first last simple">
+<li><strong>status (str)</strong>: project type&#8217;s name. Based on <tt class="docutils literal"><span class="pre">STATUS_CHOICES</span></tt>.</li>
+<li><strong>url (url)</strong>: project status&#8217; url.</li>
+<li><strong>remarks (str)</strong>: status&#8217; remarks.</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="projects.models.ProjectSetupStatus.is_failed">
+<tt class="descname">is_failed</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/projects/models.html#ProjectSetupStatus.is_failed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.ProjectSetupStatus.is_failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <tt class="docutils literal"><span class="pre">Failed</span></tt> status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="projects.models.ProjectSetupStatus.is_skipped">
+<tt class="descname">is_skipped</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/projects/models.html#ProjectSetupStatus.is_skipped"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.ProjectSetupStatus.is_skipped" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <tt class="docutils literal"><span class="pre">Skip</span></tt> status.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="projects.models.ProjectSetupStatus.is_success">
+<tt class="descname">is_success</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/projects/models.html#ProjectSetupStatus.is_success"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.ProjectSetupStatus.is_success" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <tt class="docutils literal"><span class="pre">Done</span></tt> status.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="projects.models.ProjectTemplate">
+<em class="property">class </em><tt class="descclassname">projects.models.</tt><tt class="descname">ProjectTemplate</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/projects/models.html#ProjectTemplate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.ProjectTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for the project&#8217;s <em>templates</em>.</p>
+<dl class="docutils">
+<dt><strong>Class Attributes:</strong></dt>
+<dd><ul class="first last simple">
+<li><strong>name (str)</strong>: project templates&#8217;s name.</li>
+<li><strong>description (str)</strong>: project templates&#8217;s short description.</li>
+<li><strong>project_type (fk)</strong>: project template to base on given project type.</li>
+<li><strong>repo_https (url)</strong>: Bitbucket repository&#8217;s HTTPS url.</li>
+<li><strong>repo_ssh (str)</strong>: Bitbucket repository&#8217;s SSH url.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="projects.models.ProjectTestSite">
+<em class="property">class </em><tt class="descclassname">projects.models.</tt><tt class="descname">ProjectTestSite</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/projects/models.html#ProjectTestSite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.ProjectTestSite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for the <cite>test-site</cite></p>
+<dl class="docutils">
+<dt><strong>Class Attributes:</strong></dt>
+<dd><ul class="first last simple">
+<li><strong>project (fk):</strong> <a class="reference internal" href="#projects.models.Project" title="projects.models.Project"><tt class="xref py py-class docutils literal"><span class="pre">Project</span></tt></a> instance.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="projects.models.ProjectType">
+<em class="property">class </em><tt class="descclassname">projects.models.</tt><tt class="descname">ProjectType</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/projects/models.html#ProjectType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.models.ProjectType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for the project&#8217;s <em>type</em>.</p>
+<dl class="docutils">
+<dt><strong>Class Attributes:</strong></dt>
+<dd><ul class="first last simple">
+<li><strong>name (str)</strong>: project type&#8217;s name</li>
+<li><strong>description (str)</strong>: project type&#8217;s short description</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="projects-utils-module">
+<h2>projects.utils module<a class="headerlink" href="#projects-utils-module" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref py py-mod docutils literal"><span class="pre">utils</span></tt> module contains all the necessary functions to setup the project and its necessary tools.</p>
+</div>
+<div class="section" id="submodules">
+<h2>submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="projects.exceptions.html">projects.exceptions module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="projects.templatetags.html">projects.templatetags module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="projects.templatetags.html#module-projects.templatetags.project_extras">projects.project_extras</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="projects.validators.html">projects.validators module</a></li>
+</ul>
+</div>
+<span class="target" id="module-projects.utils"></span><dl class="function">
+<dt id="projects.utils.authorize_bitbucket">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">authorize_bitbucket</tt><big>(</big><em>settings</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#authorize_bitbucket"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.authorize_bitbucket" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the authorization of Jumpstart&#8217;s Bitbucket account to allow access to its repository.
+It needs to be authorized since the system will push the project to its repository.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#projects.utils.create_new_repository" title="projects.utils.create_new_repository"><tt class="xref py py-func docutils literal"><span class="pre">create_new_repository()</span></tt></a></p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>settings</strong> &#8211; Contains the necessary keys that will be used for Bitbucket authorization</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">an <em>authorized</em> <tt class="xref py py-class docutils literal"><span class="pre">Bitbucket</span></tt> object</td>
+</tr>
+</tbody>
+</table>
+<p>Raises: <tt class="xref py py-class docutils literal"><span class="pre">ProjectSetupError</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">bitbucket</span> <span class="o">=</span> <span class="n">Bitbucket</span><span class="p">(</span><span class="n">bitbucket_username</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">bitbucket_username</span></tt> refers the Jumpstart&#8217;s Bitbucket username.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="xref py py-class docutils literal"><span class="pre">Bitbucket</span></tt> is from Python&#8217;s <a class="reference external" href="https://pypi.python.org/pypi/bitbucket-api">Bitbucket API library</a>.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.change_project_name">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">change_project_name</tt><big>(</big><em>base_directory</em>, <em>default_project_folder_name</em>, <em>project_folder_name</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#change_project_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.change_project_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renames the default <cite>project_name</cite> of the cloned template folder into the actual project&#8217;s name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>base_directory</strong> &#8211; Path where the cloned template is located.</li>
+<li><strong>default_project_folder_name</strong> &#8211; The default name for the project&#8217;s folder.</li>
+<li><strong>project_folder_name</strong> &#8211; Serves as the new folder name of the template.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.clone_template">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">clone_template</tt><big>(</big><em>project_working_directory</em>, <em>default_project_folder_name</em>, <em>project_folder_name</em>, <em>project_template_ssh</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#clone_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.clone_template" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is where the template is cloned from Jumpstart&#8217;s repository.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>project_working_directory</strong> &#8211; Path where the cloned template is located.</li>
+<li><strong>default_project_folder_name</strong> &#8211; The default name for the project&#8217;s folder.</li>
+<li><strong>project_template_ssh</strong> &#8211; The Bitbucket SSH key to be used for cloning the template.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Raises: <tt class="xref py py-class docutils literal"><span class="pre">ProjectSetupError</span></tt></p>
+<p>Cloning of the template is executed by running a command at the terminal using <a class="reference external" href="http://docs.python.org/library/subprocess.html#subprocess.call" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">subprocess.call()</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">return_code</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">clone_template_command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">return_code</span></tt> stores the status of the called command, and <tt class="docutils literal"><span class="pre">clone_template_command</span></tt> 
+is a pre-defined command that executes <em>git clone</em>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can visit <a class="reference external" href="http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository">The official Documentation of
+Git</a> for a better understanding of <cite>git clone</cite> and other related commands.</p>
+</div>
+<p>Two other functions are called to finish the process of cloning the project template, 
+the <a class="reference internal" href="#projects.utils.change_project_name" title="projects.utils.change_project_name"><tt class="xref py py-func docutils literal"><span class="pre">change_project_name()</span></tt></a> and <a class="reference internal" href="#projects.utils.create_superuser_fixtures" title="projects.utils.create_superuser_fixtures"><tt class="xref py py-func docutils literal"><span class="pre">create_superuser_fixtures()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.create_NGINX_file">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">create_NGINX_file</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/projects/utils.html#create_NGINX_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.create_NGINX_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the necessary NGINX file needed to run the project to a test site.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.create_new_repository">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">create_new_repository</tt><big>(</big><em>bitbucket</em>, <em>project</em>, <em>project_repository</em>, <em>project_working_directory</em>, <em>ssh_host_alias</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#create_new_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.create_new_repository" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new Bitbucket project repository. It also commits based on the project&#8217;s template used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>bitbucket</strong> &#8211; The authorized <tt class="xref py py-class docutils literal"><span class="pre">Bitbucket</span></tt> object.</li>
+<li><strong>project</strong> &#8211; The current project&#8217;s instance.</li>
+<li><strong>project_repository</strong> &#8211; A <tt class="xref py py-class docutils literal"><span class="pre">ProjectRepository</span></tt> instance.</li>
+<li><strong>project_working_directory</strong> &#8211; The directory of the template.</li>
+<li><strong>ssh_host_alias</strong> &#8211; The host alias used for accessing Jumpstart&#8217;s repository.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Raises: <tt class="xref py py-class docutils literal"><span class="pre">ProjectSetupError</span></tt></p>
+<p>First, <tt class="xref py py-class docutils literal"><span class="pre">Bitbucket</span></tt> checks if a repository with the same name as the project name has already been created.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">success</span><span class="p">,</span> <span class="n">project_bitbucket_repository</span> <span class="o">=</span> <span class="n">bitbucket</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project_repository_slug</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If no repository exists, then the <tt class="docutils literal"><span class="pre">repository.create()</span></tt> is called to create a repository into the Jumpstart&#8217;s account.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">bitbucket</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">project_repository_slug</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">project_repository_slug</span></tt> is the desired name for the project repository.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.create_superuser_fixtures">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">create_superuser_fixtures</tt><big>(</big><em>project_base_directory</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#create_superuser_fixtures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.create_superuser_fixtures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a <em>superuser</em> to the database.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.project_setup_retry">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">project_setup_retry</tt><big>(</big><em>project_id</em>, <em>setup_type</em>, <em>user</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#project_setup_retry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.project_setup_retry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retries creating a specific project tool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>project_id</strong> &#8211; Current project&#8217;s id.</li>
+<li><strong>setup_type</strong> &#8211; What tool to attempt a retry in creating.</li>
+<li><strong>user</strong> &#8211; Current user logged in.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">True</span></tt> if successful, otherwise <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>It checks the <tt class="docutils literal"><span class="pre">setup_type</span></tt> and determine what <em>setup</em> function to use.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup_repository</span><span class="p">()</span>
+<span class="n">setup_test_site</span><span class="p">()</span>
+<span class="n">setup_jira_space</span><span class="p">()</span>
+<span class="n">setup_redmine_space</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>and all these functions will return either <tt class="docutils literal"><span class="pre">True</span></tt> or <tt class="docutils literal"><span class="pre">False</span></tt> for its creation status.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.set_ssh_host_alias">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">set_ssh_host_alias</tt><big>(</big><em>repo_ssh</em>, <em>repository_host</em>, <em>ssh_host_alias</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#set_ssh_host_alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.set_ssh_host_alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces the default host (<cite>bitbucket.org</cite>) with <cite>SSH Host Alias</cite> to be used for accessing the repository.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>repo_ssh</strong> &#8211; The SSH Key of the repository.</li>
+<li><strong>repository_host</strong> &#8211; The username of the Bitbucket account used.</li>
+<li><strong>ssh_host_alias</strong> &#8211; Host alias used for multiple accounts.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">repo_ssh</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is crucial for it will ensure users to be able to create a project and push the files to its corresponding repository, given that the user already has its own Bitbucket account(one that is not related to Jumpstart).For more information, please do read more about <a class="reference external" href="https://confluence.atlassian.com/pages/viewpage.action?pageId=271943168#ConfiguremultipleSSHidentitiesforGitBash,MacOSX,&amp;Linux-CreatemultipleidentitiesforMacOSX,GitBash,andLinux">SSH Host Alias</a>.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.setup_jira_space">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">setup_jira_space</tt><big>(</big><em>project_management</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#setup_jira_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.setup_jira_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up <em>JIRA</em> project space</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>project_management</strong> &#8211; The project&#8217;s <tt class="xref py py-class docutils literal"><span class="pre">ProjectManagement</span></tt> instance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.setup_redmine_space">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">setup_redmine_space</tt><big>(</big><em>project_management</em>, <em>user</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#setup_redmine_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.setup_redmine_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up <em>Redmine</em> project space.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>project_management</strong> &#8211; The project&#8217;s <tt class="xref py py-class docutils literal"><span class="pre">ProjectManagement</span></tt> instance.</li>
+<li><strong>user</strong> &#8211; Current user logged in.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">True</span></tt> if setup was successful, otherwise <tt class="docutils literal"><span class="pre">False</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>First it retrieves the necessary <cite>user&#8217;s</cite> credentials needed for Redmine in the <tt class="xref py py-class docutils literal"><span class="pre">Settings</span></tt> module.</p>
+<p>Afterwhich, the Redmine&#8217;s project space is now created using <tt class="xref py py-class docutils literal"><span class="pre">Redmine</span></tt> from the <cite>Redmine Python package</cite>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">redmine</span> <span class="o">=</span> <span class="n">Redmine</span><span class="p">(</span><span class="n">redmine_url</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">redmine_key</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s">&#39;2.3.3&#39;</span><span class="p">,</span> <span class="n">requests</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;verify&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">})</span>
+<span class="n">redmine_project</span> <span class="o">=</span> <span class="n">redmine</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="n">project_identifier</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">project_description</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">redmine_url</span></tt> and <tt class="docutils literal"><span class="pre">redmine_key</span></tt> are all retrieved from the user&#8217;s <tt class="xref py py-class docutils literal"><span class="pre">Settings</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Visit <a class="reference external" href="https://pypi.python.org/pypi/python-redmine">Python-Redmine</a> for more details.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.setup_repository">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">setup_repository</tt><big>(</big><em>project_repository</em>, <em>user</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#setup_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.setup_repository" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles all the repository-related functions necessary for the creation of project&#8217;s repository.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>project_repository</strong> &#8211; A newly initialized <tt class="xref py py-class docutils literal"><span class="pre">ProjectRepository</span></tt> object linked to the current project in progress.</li>
+<li><strong>user</strong> &#8211; Currently logged in user.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><cite>True</cite> if setup was successfully created</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Raises: <tt class="xref py py-class docutils literal"><span class="pre">ProjectSetupError</span></tt></p>
+<p>Initially, it sets the <a class="reference internal" href="#projects.utils.update_setup_status_working" title="projects.utils.update_setup_status_working"><tt class="xref py py-func docutils literal"><span class="pre">update_setup_status_working()</span></tt></a> for the <tt class="docutils literal"><span class="pre">project_repository</span></tt>.
+Before the setup, it authorizes the Bitbucket account used by Jumpstart, where it will store the new repository that will be created by the user.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">bitbucket</span> <span class="o">=</span> <span class="n">authorize_bitbucket</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">settings</span></tt> contains all the settings <em>(keys, urls)</em> that will be used to setup the project tools. (see <a class="reference internal" href="#projects.utils.authorize_bitbucket" title="projects.utils.authorize_bitbucket"><tt class="xref py py-func docutils literal"><span class="pre">authorize_bitbucket()</span></tt></a>)</p>
+<p>Next, a repository that corresponds to the template chosen is then cloned using <a class="reference internal" href="#projects.utils.clone_template" title="projects.utils.clone_template"><tt class="xref py py-func docutils literal"><span class="pre">clone_template()</span></tt></a>.</p>
+<p>Given all the necessary configurations <em>(authorize, clone, rename template)</em> have been completed, the project&#8217;s
+repository can now be created by calling <a class="reference internal" href="#projects.utils.create_new_repository" title="projects.utils.create_new_repository"><tt class="xref py py-func docutils literal"><span class="pre">create_new_repository()</span></tt></a>.</p>
+<p>Once the repository has been successfully created, it then updates the status of the <tt class="docutils literal"><span class="pre">project_repository</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">update_setup_status_done</span><span class="p">(</span><span class="n">project_repository</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.setup_test_site">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">setup_test_site</tt><big>(</big><em>project_test_site</em>, <em>project_repository</em>, <em>user</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#setup_test_site"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.setup_test_site" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up a <em>test-site</em> for the project.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>project_test_site</strong> &#8211; The project&#8217;s <tt class="xref py py-class docutils literal"><span class="pre">ProjectTestSite</span></tt> instance.</li>
+<li><strong>project_repository</strong> &#8211; The project&#8217;s <tt class="xref py py-class docutils literal"><span class="pre">ProjectRepository</span></tt> instance.</li>
+<li><strong>user</strong> &#8211; Current user logged in.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">True</span></tt> if successful, otherwise <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>In creating the test site, the following command is called in the terminal using <a class="reference external" href="http://docs.python.org/library/subprocess.html#subprocess.call" title="(in Python v2.7)"><tt class="xref py py-func docutils literal"><span class="pre">subprocess.call()</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">command</span> <span class="o">=</span> <span class="s">&quot;fab deploy:&#39;</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">project_repo</span><span class="p">,</span> <span class="n">project_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.update_setup_status">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">update_setup_status</tt><big>(</big><em>status_model</em>, <em>status</em>, <em>remarks=None</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#update_setup_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.update_setup_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>General update of the status of a given PM tool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>status_model</strong> &#8211; The tool passed to update its status.</li>
+<li><strong>status</strong> &#8211; Current tool status.</li>
+<li><strong>remarks</strong> &#8211; Remarks regarding tool status.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.update_setup_status_done">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">update_setup_status_done</tt><big>(</big><em>status_model</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#update_setup_status_done"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.update_setup_status_done" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status of a given PM tool to <tt class="docutils literal"><span class="pre">DONE</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status_model</strong> &#8211; The tool passed to update its status.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.update_setup_status_failed">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">update_setup_status_failed</tt><big>(</big><em>status_model</em>, <em>error_message=None</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#update_setup_status_failed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.update_setup_status_failed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status of a given PM tool to <tt class="docutils literal"><span class="pre">FAILED</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>status_model</strong> &#8211; The tool passed to update its status.</li>
+<li><strong>error_message</strong> &#8211; Error message that was fetched from its creation process.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.update_setup_status_new">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">update_setup_status_new</tt><big>(</big><em>status_model</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#update_setup_status_new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.update_setup_status_new" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status of a given PM tool to <tt class="docutils literal"><span class="pre">NEW</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status_model</strong> &#8211; The tool passed to update its status.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.update_setup_status_skip">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">update_setup_status_skip</tt><big>(</big><em>status_model</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#update_setup_status_skip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.update_setup_status_skip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status of a given PM tool to <tt class="docutils literal"><span class="pre">SKIP</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status_model</strong> &#8211; The tool passed to update its status.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="projects.utils.update_setup_status_working">
+<tt class="descclassname">projects.utils.</tt><tt class="descname">update_setup_status_working</tt><big>(</big><em>status_model</em><big>)</big><a class="reference internal" href="_modules/projects/utils.html#update_setup_status_working"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#projects.utils.update_setup_status_working" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the status of a given PM tool to <tt class="docutils literal"><span class="pre">WORKING</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status_model</strong> &#8211; The tool passed to update its status.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/projects.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Ingenuity.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

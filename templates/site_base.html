@@ -1,0 +1,235 @@
+{% load staticfiles %}
+{% load url from future %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block head_title_base %}{% if SITE_NAME %}{{ SITE_NAME }} | {% endif %}{% block head_title %}{% endblock %}{% endblock %}</title>
+        {% block viewport %}
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% endblock %}
+
+        {% block style_base %}
+            <!-- Bootstrap (Flatly) -->
+            <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+            <link href="{% static "bootstrap/flatly/bootstrap.min.css" %}" rel="stylesheet">
+            <!-- Overwrites -->
+            <link rel="stylesheet" href="{% static "css/base.css" %}" type="text/css">
+            {% block extra_style %}{% endblock %}
+        {% endblock %}
+
+        {% block html5shim %}
+            <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+              <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <![endif]-->
+        {% endblock %}
+
+        {% block extra_head_base %}
+            {% block extra_head %}{% endblock %}
+        {% endblock %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}" id="{% block body_id %}{% endblock %}">
+        <div id="loading_modal" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+            <div style="height:200px">
+              <span id="spinner_center" style="position: absolute;display: block;top: 50%;left: 50%;"></span>
+            </div>
+        </div>
+
+        <div class="{% block wrapper_class %}{% endblock %}">
+            {% block topbar_base %}
+            <div class="navbar navbar-default navbar-fixed-top" {% block navbar_class %}navbar-fixed-top{% endblock %}>
+                <div class="container">
+                    {% block topbar %}
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            {% block site_brand %}
+                                <a class="navbar-brand" href="{% url "home" %}">
+                                    <img src="{% static "images/logo.png" %}"/>
+                                    <strong>{{ SITE_NAME }}</strong>
+                                </a>
+                            {% endblock %}
+                        </div>
+                        <div class="navbar-collapse collapse navbar-responsive-collapse">
+                            {% block nav %}
+                                <ul class="nav navbar-nav">
+                                    {% block nav_left %}
+                                    {% endblock %}
+                                </ul>
+                                <ul class="nav navbar-nav navbar-right">
+                                    {% block nav_right %}
+                                        <li id="tab_home" {% block nav_home_active %}{% endblock %}><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span> &nbsp; Home</a></li>
+                                        {% if user.is_authenticated %}
+                                        <li id="tab_projects" {% block nav_projects_active %}{% endblock %}><a href="{% url 'projects' %}"><span class="glyphicon glyphicon-th-list"></span> &nbsp; Projects</a></li>
+                                        <li id="tab_settings" {% block nav_administration_active %}{% endblock %}><a href="{% url 'profiles:settings' %}"><span class="glyphicon glyphicon-cog"></span> &nbsp; Settings</a></li>
+                                        {% endif %}
+                                        <li id="tab_wiki" {% block nav_wiki_active %}{% endblock %}><a href="{% url 'wiki' %}"><span class="glyphicon glyphicon-info-sign"></span> &nbsp; Wiki</a></li>
+                                        <li id="tab_login" {% block nav_login_active %}{% endblock %}>
+                                            {% if user.is_authenticated %}
+                                                <a href="{% url 'logout' %}"><span class="glyphicon glyphicon-lock"></span> &nbsp; Logout</a>
+                                            {% else %}
+                                                <a href="{% url 'login' %}"><span class="glyphicon glyphicon-lock"></span> &nbsp; Login</a>
+                                            {% endif %}
+                                        </li>
+                                    {% endblock %}
+                                </ul>
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+            {% endblock %}
+
+            {% block body_base %}
+                {% block jumbotron %}
+                {% endblock %}
+                <div class="container">
+                    {% block body %}
+                        {% block page_header_container %}
+                            <div class="row">
+                                {% block page_header %}
+                                    <div class="col-md-12">
+                                        <div class="page-header">
+                                             <div class="row">
+                                                <div class="col-md-8 page-header-title">
+                                                    <h1><strong>{% block page_header_title %}{% endblock %}</strong></h1>
+                                                </div>
+                                                <div class="col-md-4 page-header-controls">
+                                                    {% block page_header_controls %}
+                                                    {% endblock %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                        {% block content_container %}
+                            <div class="row">
+                                {% block content %}
+                                    <div class="col-md-8">
+                                        {% block message_alert %}
+                                            {% block alert_info %}
+                                                <div id="alert_info" class="alert alert-dismissable alert-info alert-hidden">
+                                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                                    {% block alert_info_message %}
+                                                        <span id="alert_info_message"></span>
+                                                    {% endblock %}
+                                                </div>
+                                            {% endblock %}
+                                            {% block alert_success %}
+                                                <div id="alert_success" class="alert alert-dismissable alert-success alert-hidden">
+                                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                                    {% block alert_success_message %}
+                                                        <span id="alert_success_message"></span>
+                                                    {% endblock %}
+                                                </div>
+                                            {% endblock %}
+                                            {% block alert_warn %}
+                                                <div id="alert_warning" class="alert alert-dismissable alert-warning alert-hidden">
+                                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                                    {% block alert_warning_message %}
+                                                        <span id="alert_warning_message"></span>
+                                                    {% endblock %}
+                                                </div>
+                                            {% endblock %}
+                                            {% block alert_danger %}
+                                                <div id="alert_danger" class="alert alert-dismissable alert-danger alert-hidden">
+                                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                                    {% block alert_danger_message %}
+                                                        <span id="alert_danger_message"></span>
+                                                    {% endblock %}
+                                                </div>
+                                            {% endblock %}
+                                        {% endblock %}
+                                        {% block left_content %}
+                                        {% endblock %}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {% block right_content %}
+                                        {% endblock %}
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+            {% block footer_base %}
+                <footer class="container footer-container">
+                    {% block footer %}
+                        {% include 'footer.html' %}
+                    {% endblock %}
+                </footer>
+                <div class="container copyright-section">
+                    {% block copyright %}
+                        {% include 'copyright.html' %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div>
+
+        {% block script_base %}
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="{% block jquery_src %}{% static "js/jquery.js" %}{% endblock %}"></script>
+            
+            <!-- Bootstrap -->
+            <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
+            <script src="{% static "js/spin.min.js" %}"></script>
+
+            <!-- Base Scripts -->
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    <!-- Message Alerts Display -->
+                    {% include "message_alerts.html" %}
+                    {% block show_alert_messages %}
+                    {% endblock %}
+
+                    <!-- Put other base scripts here -->
+                });
+
+                $("form").submit(function() {
+                    var opts = {
+                      lines: 15, // The number of lines to draw
+                      length: 40, // The length of each line
+                      width: 15, // The line thickness
+                      radius: 60, // The radius of the inner circle
+                      corners: 1, // Corner roundness (0..1)
+                      rotate: 0, // The rotation offset
+                      direction: 1, // 1: clockwise, -1: counterclockwise
+                      color: '#000', // #rgb or #rrggbb or array of colors
+                      speed: 1, // Rounds per second
+                      trail: 60, // Afterglow percentage
+                      shadow: false, // Whether to render a shadow
+                      hwaccel: false, // Whether to use hardware acceleration
+                      className: 'spinner', // The CSS class to assign to the spinner
+                      zIndex: 2e9, // The z-index (defaults to 2000000000)
+                      top: 'auto', // Top position relative to parent in px
+                      left:'auto' // Left position relative to parent in px
+                    };
+
+                    var target = document.getElementById('spinner_center');
+                    var spinner = new Spinner(opts).spin(target);
+
+                    $('#loading_modal').modal('show')
+                });
+
+            </script>
+
+            {% block extra_script %}{% endblock %}
+        {% endblock %}
+
+        {% block extra_body_base %}
+            {% block extra_body %}{% endblock %}
+        {% endblock %}
+    </body>
+</html>

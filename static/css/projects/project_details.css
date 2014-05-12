@@ -1,0 +1,19 @@
+<style>
+    #title{
+        margin:0px auto;
+    }
+    #description {
+        margin: 30px auto;
+    }
+    #details-container {
+        margin-top: 10px;
+    }
+    .detail {
+        padding: 5px 25px;
+        background: #F3E2A9;
+    }
+    .italic{
+        font-style: italic;
+        font-size: 0.9em;
+    }
+</style>

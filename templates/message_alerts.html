@@ -1,0 +1,27 @@
+// Hide Message Alerts by default
+//$("#alert_info").hide()
+//$("#alert_success").hide()
+//$("#alert_warning").hide()
+//$("#alert_danger").hide()
+
+// Display Message Alert and set message
+function showMessageAlert(messageAlertID, htmlMessage) {
+    $(messageAlertID+"_message").html(htmlMessage);
+    $(messageAlertID).show();
+}
+
+function showInfoMessage(htmlMessage) {
+    showMessageAlert("#alert_info", htmlMessage);
+}
+
+function showSuccessMessage(htmlMessage) {
+    showMessageAlert("#alert_success", htmlMessage);
+}
+
+function showWarningMessage(htmlMessage) {
+    showMessageAlert("#alert_warning", htmlMessage);
+}
+
+function showErrorMessage(htmlMessage) {
+    showMessageAlert("#alert_danger", htmlMessage);
+}

@@ -1,0 +1,28 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% load pages_tags %}
+
+
+{% block nav_wiki_active %}
+    class="active"
+{% endblock %}
+
+
+
+{% block page_header_title %}Wiki{% endblock %}
+
+{% block content %}
+
+<h2>WELCOME TO JUMPSTART WIKI</h2>
+<p>
+    This is the Mezzanine powered Wiki page.<br>
+    <font size = "2">(Be sure to add Wiki content as a Page)</font>
+</p>
+
+<ul>
+	{% page_menu "pages/menus/tree.html" %}
+	<br>
+    <a href="/admin/"><font size = "1" color = "black">Add Wiki content?</font></a>
+</ul>
+
+{% endblock %}

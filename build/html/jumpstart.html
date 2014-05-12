@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Main Jumpstart package &mdash; Jumpstart 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Jumpstart 1.0 documentation" href="index.html" />
+    <link rel="up" title="Modules" href="modules.html" />
+    <link rel="next" title="Profiles package" href="profiles.html" />
+    <link rel="prev" title="Modules" href="modules.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="_static/logo.png">
+          Jumpstart</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Jumpstart <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Main Jumpstart package</a><ul>
+<li><a class="reference internal" href="#module-jumpstart.context_processors">jumpstart.context_processors module</a></li>
+<li><a class="reference internal" href="#module-jumpstart.forms">jumpstart.forms module</a></li>
+<li><a class="reference internal" href="#module-jumpstart.tests">jumpstart.tests module</a></li>
+<li><a class="reference internal" href="#module-jumpstart.urls">jumpstart.urls module</a></li>
+<li><a class="reference internal" href="#jumpstart-views-module">jumpstart.views module</a></li>
+<li><a class="reference internal" href="#module-jumpstart.wsgi">jumpstart.wsgi module</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="modules.html" title="Previous Chapter: Modules"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; Modules</span>
+    </a>
+  </li>
+  <li>
+    <a href="profiles.html" title="Next Chapter: Profiles package"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">Profiles package &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="main-jumpstart-package">
+<h1>Main Jumpstart package<a class="headerlink" href="#main-jumpstart-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-jumpstart.context_processors">
+<span id="jumpstart-context-processors-module"></span><h2>jumpstart.context_processors module<a class="headerlink" href="#module-jumpstart.context_processors" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>jumpstart.context_processors.py</strong> file add the site name and domain variables into the contexts of every template.</p>
+<dl class="function">
+<dt id="jumpstart.context_processors.site_settings">
+<tt class="descclassname">jumpstart.context_processors.</tt><tt class="descname">site_settings</tt><big>(</big><em>request</em><big>)</big><a class="reference internal" href="_modules/jumpstart/context_processors.html#site_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.context_processors.site_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Includes site settings variable into the contexts of the project&#8217;s templates</p>
+<dl class="docutils">
+<dt><strong>Arguments:</strong></dt>
+<dd><ul class="first last simple">
+<li>request: a Web request</li>
+</ul>
+</dd>
+<dt><strong>Attributes:</strong></dt>
+<dd><ul class="first last simple">
+<li>SITE_NAME: The general name of the site</li>
+<li>SITE_DOMAIN: The general domain for the site</li>
+</ul>
+</dd>
+<dt><strong>Returns:</strong></dt>
+<dd><ul class="first last simple">
+<li>ctx: The context containing the SITE_NAME and SITE_DOMAIN information</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-jumpstart.forms">
+<span id="jumpstart-forms-module"></span><h2>jumpstart.forms module<a class="headerlink" href="#module-jumpstart.forms" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>jumpstart.forms.py</strong> file configures the editable forms (<em>interface for User Input</em>) to be used by the project, in general</p>
+<dl class="class">
+<dt id="jumpstart.forms.LoginForm">
+<em class="property">class </em><tt class="descclassname">jumpstart.forms.</tt><tt class="descname">LoginForm</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/jumpstart/forms.html#LoginForm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.forms.LoginForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="jumpstart.forms.LoginForm.clean">
+<tt class="descname">clean</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/jumpstart/forms.html#LoginForm.clean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.forms.LoginForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements individual field check for the login information, and returns an error message once an invalid input is detected.</p>
+<p><strong>Raises:</strong></p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Validation error (<em>for non-existing usernames</em>):</dt>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">&lt;username&gt;</span> <span class="pre">does</span> <span class="pre">not</span> <span class="pre">exist.</span> <span class="pre">You</span> <span class="pre">must</span> <span class="pre">register</span> <span class="pre">first.</span></tt></p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Validation error (<em>for invalid username or password</em>):</dt>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">Your</span> <span class="pre">username/password</span> <span class="pre">is</span> <span class="pre">incorrect.</span></tt></p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="jumpstart.forms.LoginForm.login">
+<tt class="descname">login</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/jumpstart/forms.html#LoginForm.login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.forms.LoginForm.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the <em>login</em> method from <em>django.contrib.auth</em> and checks if the user is authenticated or not</p>
+<p><strong>Raises:</strong></p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Validation error (<em>for errors in logging</em>):</dt>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">User</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">authenticated</span></tt></p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-jumpstart.tests">
+<span id="jumpstart-tests-module"></span><h2>jumpstart.tests module<a class="headerlink" href="#module-jumpstart.tests" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>jumpstart.tests.py</strong> file provides error handling mechanisms for Test Cases in the project</p>
+<dl class="class">
+<dt id="jumpstart.tests.LoginTests">
+<em class="property">class </em><tt class="descclassname">jumpstart.tests.</tt><tt class="descname">LoginTests</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="_modules/jumpstart/tests.html#LoginTests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.tests.LoginTests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.test.testcases.TestCase</span></tt></p>
+<dl class="method">
+<dt id="jumpstart.tests.LoginTests.test_duplicate_account">
+<tt class="descname">test_duplicate_account</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/jumpstart/tests.html#LoginTests.test_duplicate_account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.tests.LoginTests.test_duplicate_account" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should not allow duplicate accounts with same credentials</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="jumpstart.tests.LoginTests.test_no_user_input_login">
+<tt class="descname">test_no_user_input_login</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/jumpstart/tests.html#LoginTests.test_no_user_input_login"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.tests.LoginTests.test_no_user_input_login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should not allow a user to login if no account exists</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-jumpstart.urls">
+<span id="jumpstart-urls-module"></span><h2>jumpstart.urls module<a class="headerlink" href="#module-jumpstart.urls" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>jumpstart.urls.py*</strong> is the main URL Configuration, which includes the general URL patterns</p>
+<dl class="docutils">
+<dt><strong>URL Patterns:</strong></dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">url(r'^$',</span> <span class="pre">'jumpstart.views.home',</span> <span class="pre">name='home')</span></tt></dt>
+<dd><p class="first last">This redirects to the Home Page</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">url(r'^admin/',</span> <span class="pre">include(admin.site.urls))</span></tt></dt>
+<dd><p class="first last">for the admin site</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">url(r'^login/$',</span> <span class="pre">'jumpstart.views.login',</span> <span class="pre">name=&quot;login&quot;)</span></tt></dt>
+<dd><p class="first last">Redirects to the Login view</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">url(r'^logout/$',</span> <span class="pre">'jumpstart.views.logout',</span> <span class="pre">name=&quot;logout&quot;)</span></tt></dt>
+<dd><p class="first last">Redirects to the Logout view</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">url(r'^projects/',</span> <span class="pre">include(&quot;projects.urls&quot;))</span></tt></dt>
+<dd><p class="first last">Links the URL patterns configured in the Projects module</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">url(r'^settings/',</span> <span class="pre">include(&quot;profiles.urls&quot;,</span> <span class="pre">namespace=&quot;profiles&quot;))</span></tt></dt>
+<dd><p class="first last">Links the URL patterns configures in the Profiles module</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">url(r'^wiki/home',</span> <span class="pre">'jumpstart.views.view_wiki',</span> <span class="pre">name</span> <span class="pre">=</span> <span class="pre">'wiki')</span></tt></dt>
+<dd><p class="first last">Redirects to the Mezzanine-powered Wiki Home Page</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">url(r'^',</span> <span class="pre">include(&quot;mezzanine.urls&quot;))</span></tt></dt>
+<dd><p class="first last">Links the URL patterns provided by Mezzanine</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="jumpstart-views-module">
+<h2>jumpstart.views module<a class="headerlink" href="#jumpstart-views-module" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-jumpstart.views"></span><p>The <strong>jumpstart.views.py</strong> file involves classes that take a Web request and return a Web response.</p>
+<dl class="class">
+<dt id="jumpstart.views.HomePageView">
+<em class="property">class </em><tt class="descclassname">jumpstart.views.</tt><tt class="descname">HomePageView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/jumpstart/views.html#HomePageView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.views.HomePageView" title="Permalink to this definition">¶</a></dt>
+<dd><p>This process the Web request of viewing the Home Page</p>
+<dl class="docutils">
+<dt><strong>Fields:</strong></dt>
+<dd><ul class="first last simple">
+<li>template_name: <tt class="docutils literal"><span class="pre">template_name</span> <span class="pre">=</span> <span class="pre">u&quot;home.html&quot;</span></tt></li>
+<li>page_slug: <tt class="docutils literal"><span class="pre">page_slug</span> <span class="pre">=</span> <span class="pre">u&quot;&quot;</span></tt></li>
+<li>page_title: <tt class="docutils literal"><span class="pre">page_title</span> <span class="pre">=</span> <span class="pre">u&quot;JumpStart&quot;</span></tt></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="jumpstart.views.LoginView">
+<em class="property">class </em><tt class="descclassname">jumpstart.views.</tt><tt class="descname">LoginView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/jumpstart/views.html#LoginView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.views.LoginView" title="Permalink to this definition">¶</a></dt>
+<dd><p>This process the Web request of presenting the Login page and starts a session using the user&#8217;s account</p>
+<dl class="docutils">
+<dt><strong>Fields:</strong></dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>form_class: <tt class="docutils literal"><span class="pre">form_class</span> <span class="pre">=</span> <span class="pre">LoginForm</span></tt></dt>
+<dd><p class="first last">This utilizes the <a class="reference internal" href="#jumpstart.forms.LoginForm" title="jumpstart.forms.LoginForm"><tt class="xref py py-class docutils literal"><span class="pre">jumpstart.forms.LoginForm</span></tt></a> initialized in the <a class="reference internal" href="#module-jumpstart.forms" title="jumpstart.forms"><tt class="xref py py-mod docutils literal"><span class="pre">jumpstart.forms</span></tt></a> module</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">template_name: <tt class="docutils literal"><span class="pre">template_name</span> <span class="pre">=</span> <span class="pre">'login.html'</span></tt></p>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="jumpstart.views.LoginView.get">
+<tt class="descname">get</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/jumpstart/views.html#LoginView.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.views.LoginView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the username and password entered by the user</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="jumpstart.views.LoginView.post">
+<tt class="descname">post</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/jumpstart/views.html#LoginView.post"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.views.LoginView.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Submits the username and password from the <a class="reference internal" href="#jumpstart.views.LoginView.get" title="jumpstart.views.LoginView.get"><tt class="xref py py-func docutils literal"><span class="pre">jumpstart.views.LoginView.get()</span></tt></a> method, authenticates if it is valid, and starts a new session</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="jumpstart.views.LogoutView">
+<em class="property">class </em><tt class="descclassname">jumpstart.views.</tt><tt class="descname">LogoutView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/jumpstart/views.html#LogoutView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.views.LogoutView" title="Permalink to this definition">¶</a></dt>
+<dd><p>This process the Web request of presenting the logging out the user and ending its current session</p>
+<dl class="method">
+<dt id="jumpstart.views.LogoutView.get">
+<tt class="descname">get</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/jumpstart/views.html#LogoutView.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.views.LogoutView.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the user out, ends the current session, and redirects to <a class="reference internal" href="#jumpstart.views.HomePageView" title="jumpstart.views.HomePageView"><tt class="xref py py-func docutils literal"><span class="pre">jumpstart.views.HomePageView()</span></tt></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-jumpstart.wsgi">
+<span id="jumpstart-wsgi-module"></span><h2>jumpstart.wsgi module<a class="headerlink" href="#module-jumpstart.wsgi" title="Permalink to this headline">¶</a></h2>
+<p>WSGI config for jumpstart project.</p>
+<p>It exposes the WSGI callable as a module-level variable named <tt class="docutils literal"><span class="pre">application</span></tt>.</p>
+<p>For more information on this file, see</p>
+<p><a class="reference external" href="https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/">https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/</a></p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/jumpstart.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Ingenuity.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

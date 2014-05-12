@@ -1,0 +1,19 @@
+{% extends "projects/project_setup_info_base.html" %}
+
+{% block panel_title %}Project Test Site{% endblock %}
+
+{% block setup_type %}test-site{% endblock %}
+
+{% block succes_details %}
+    {% with field_label="Site URL" field_value=project_test_site.url link=project_test_site.url %}
+    {% include "form_field_view.html" %}
+    {% endwith %}
+{% endblock %}
+
+{% block failed_message %}
+    Project Test Site Setup <strong>FAILED</strong>.
+{% endblock %}
+
+{% block create_message %}
+    Project Test Site not yet created.
+{% endblock %}

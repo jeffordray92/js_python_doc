@@ -1,0 +1,14 @@
+{% extends "site_base.html" %}
+{% load staticfiles %}
+
+{% block extra_style%}
+    <link rel="stylesheet" href="{% static 'css/projects/projects.css' %}" type="text/css">
+{% endblock %}
+
+{% block nav_projects_active %}
+    class="active"
+{% endblock %}
+
+{% block right_content %}
+    {% include 'latest_projects.html' %}
+{% endblock %}

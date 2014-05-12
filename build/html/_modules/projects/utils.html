@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>projects.utils &mdash; Jumpstart 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.1.0/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Jumpstart 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/logo.png">
+          Jumpstart</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Jumpstart <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for projects.utils</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">fileinput</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">webbrowser</span>
+
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render_to_response</span>
+<span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urljoin</span>
+
+<span class="kn">from</span> <span class="nn">bitbucket.bitbucket</span> <span class="kn">import</span> <span class="n">Bitbucket</span>
+<span class="kn">from</span> <span class="nn">redmine</span> <span class="kn">import</span> <span class="n">Redmine</span>
+
+<span class="kn">from</span> <span class="nn">profiles.models</span> <span class="kn">import</span> <span class="n">Settings</span>
+<span class="kn">from</span> <span class="nn">projects.exceptions</span> <span class="kn">import</span> <span class="n">ProjectSetupError</span>
+<span class="kn">from</span> <span class="nn">projects.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Project</span><span class="p">,</span> 
+    <span class="n">ProjectManagement</span><span class="p">,</span> 
+    <span class="n">ProjectRepository</span><span class="p">,</span> 
+    <span class="n">ProjectSetupStatus</span><span class="p">,</span>
+    <span class="n">ProjectTestSite</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">USER_HOME</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span>
+<span class="n">REPOSITORY_HOST</span> <span class="o">=</span> <span class="s">&quot;bitbucket.org&quot;</span>
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&quot;projects&quot;</span><span class="p">)</span>
+
+
+
+<div class="viewcode-block" id="setup_repository"><a class="viewcode-back" href="../../projects.html#projects.utils.setup_repository">[docs]</a><span class="k">def</span> <span class="nf">setup_repository</span><span class="p">(</span><span class="n">project_repository</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles all the repository-related functions necessary for the creation of project&#39;s repository.</span>
+
+<span class="sd">    :param project_repository: A newly initialized :py:class:`ProjectRepository` object linked to the current project in progress.</span>
+<span class="sd">    :param user: Currently logged in user.</span>
+
+<span class="sd">    :returns: `True` if setup was successfully created</span>
+
+<span class="sd">    Raises: :py:class:`ProjectSetupError`</span>
+
+<span class="sd">    Initially, it sets the :py:func:`update_setup_status_working()` for the ``project_repository``.</span>
+<span class="sd">    Before the setup, it authorizes the Bitbucket account used by Jumpstart, where it will store the new repository that will be created by the user.</span>
+<span class="sd">    ::</span>
+
+<span class="sd">      bitbucket = authorize_bitbucket(settings)</span>
+
+<span class="sd">    where ``settings`` contains all the settings *(keys, urls)* that will be used to setup the project tools. (see :py:func:`authorize_bitbucket()`)</span>
+
+<span class="sd">    Next, a repository that corresponds to the template chosen is then cloned using :py:func:`clone_template()`.</span>
+
+<span class="sd">    Given all the necessary configurations *(authorize, clone, rename template)* have been completed, the project&#39;s</span>
+<span class="sd">    repository can now be created by calling :py:func:`create_new_repository()`.</span>
+
+<span class="sd">    Once the repository has been successfully created, it then updates the status of the ``project_repository``.</span>
+
+<span class="sd">    ::</span>
+
+<span class="sd">      update_setup_status_done(project_repository)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c"># Start creating project repository (set status=WORKING)</span>
+        <span class="n">update_setup_status_working</span><span class="p">(</span><span class="n">project_repository</span><span class="p">)</span>
+
+        <span class="n">project</span> <span class="o">=</span> <span class="n">project_repository</span><span class="o">.</span><span class="n">project</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+
+        <span class="c"># Set current project&#39;s working directory</span>
+        <span class="n">projects_relative_directory</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">projects_working_directory</span>
+        <span class="n">projects_working_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">USER_HOME</span><span class="p">,</span> <span class="n">projects_relative_directory</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span> <span class="ow">and</span> <span class="n">projects_relative_directory</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="ow">or</span> <span class="n">projects_relative_directory</span><span class="p">)</span>
+        <span class="n">project_working_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">projects_working_directory</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">id</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">project</span><span class="o">.</span><span class="n">slug</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">project_working_directory</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">project_working_directory</span><span class="p">)</span>
+        <span class="n">bitbucket</span> <span class="o">=</span> <span class="n">authorize_bitbucket</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+        <span class="c"># Clone template from template repository</span>
+        <span class="n">default_project_folder_name</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">default_project_folder_name</span>
+        <span class="n">project_folder_name</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">slug</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;-&quot;</span><span class="p">,</span> <span class="s">&quot;_&quot;</span><span class="p">)</span>
+        <span class="n">project_template_ssh</span> <span class="o">=</span> <span class="n">set_ssh_host_alias</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">project_template</span><span class="o">.</span><span class="n">repo_ssh</span><span class="p">,</span> <span class="n">REPOSITORY_HOST</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">ssh_host_alias</span><span class="p">)</span>
+        <span class="n">project_base_directory</span> <span class="o">=</span> <span class="n">clone_template</span><span class="p">(</span><span class="n">project_working_directory</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">default_project_folder_name</span><span class="p">,</span> <span class="n">project_folder_name</span><span class="p">,</span> <span class="n">project_template_ssh</span><span class="p">)</span>
+
+        <span class="c"># Create NEW Bitbucket Project Repository (Initial commit, based on template selected)</span>
+        <span class="n">create_new_repository</span><span class="p">(</span><span class="n">bitbucket</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">project_repository</span><span class="p">,</span> <span class="n">project_working_directory</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">ssh_host_alias</span><span class="p">)</span>
+
+        <span class="c"># Done creating repository (set status=DONE)</span>
+        <span class="n">update_setup_status_done</span><span class="p">(</span><span class="n">project_repository</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">True</span><span class="p">;</span>
+
+    <span class="k">except</span> <span class="n">ProjectSetupError</span> <span class="k">as</span> <span class="n">project_setup_error</span><span class="p">:</span>
+        <span class="n">error_message</span> <span class="o">=</span>  <span class="s">&quot;</span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">project_setup_error</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">project_setup_error</span><span class="p">))</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> (user: </span><span class="si">%s</span><span class="s">, project name: </span><span class="si">%s</span><span class="s">, bitbucket: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error_message</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">project_folder_name</span><span class="p">,</span> <span class="n">bitbucket</span><span class="p">))</span>
+        <span class="n">update_setup_status_failed</span><span class="p">(</span><span class="n">project_repository</span><span class="p">,</span> <span class="n">project_setup_error</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ProjectSetupError</span><span class="p">(</span><span class="s">&quot;Failed to create New Bitbucket Repository.&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="authorize_bitbucket"><a class="viewcode-back" href="../../projects.html#projects.utils.authorize_bitbucket">[docs]</a><span class="k">def</span> <span class="nf">authorize_bitbucket</span><span class="p">(</span><span class="n">settings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles the authorization of Jumpstart&#39;s Bitbucket account to allow access to its repository.</span>
+<span class="sd">    It needs to be authorized since the system will push the project to its repository. </span>
+
+<span class="sd">    .. seealso:: :py:func:`create_new_repository()`</span>
+
+<span class="sd">    :param settings: Contains the necessary keys that will be used for Bitbucket authorization</span>
+
+<span class="sd">    :returns: an *authorized* :py:class:`Bitbucket` object</span>
+
+<span class="sd">    Raises: :py:class:`ProjectSetupError`</span>
+<span class="sd">    </span>
+<span class="sd">    ::</span>
+
+<span class="sd">      bitbucket = Bitbucket(bitbucket_username)</span>
+
+<span class="sd">    where ``bitbucket_username`` refers the Jumpstart&#39;s Bitbucket username.</span>
+
+<span class="sd">    .. note:: :py:class:`Bitbucket` is from Python&#39;s `Bitbucket API library &lt;https://pypi.python.org/pypi/bitbucket-api&gt;`_.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># [Paul] Notes on Bitbucket API:</span>
+    
+    <span class="c"># Bitbucket.authorize() always returns True if all parameters are provided (even if incorrect! -- see code in link below)</span>
+    <span class="c"># Actual verification of oauth credentials only done upon sending of GET request in the following Repository class methods:</span>
+
+    <span class="c">#     Repository.all()</span>
+    <span class="c">#     Repository.get()*</span>
+    <span class="c">#     Repository.create()</span>
+    <span class="c">#     Repository.update()</span>
+    <span class="c">#     Repository.delete()</span>
+    <span class="c">#     Repository.archive()</span>
+     
+    <span class="c"># *Hence, we create a blank TEST_REPOSITORY to verify if our succeeding actions can push through via the Bitbucket API</span>
+    <span class="c">#  (better than calling Repository.all())</span>
+    
+    <span class="c"># Reference source code:</span>
+    <span class="c">#     Bitbucket class - https://bitbucket-api.readthedocs.org/en/latest/_modules/bitbucket/bitbucket.html</span>
+    <span class="c">#     Repository class - https://bitbucket-api.readthedocs.org/en/latest/_modules/bitbucket/repository.html</span>
+
+    <span class="n">TEST_REPOSITORY_SLUG</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">test_repository_slug</span>
+
+    <span class="n">bitbucket_username</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">repository_username</span>
+    <span class="n">bitbucket_consumer_key</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">repository_consumer_key</span>
+    <span class="n">bitbucket_consumer_secret</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">repository_consumer_secret</span>
+    <span class="n">bitbucket_oauth_access_token</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">repository_oauth_access_token</span>
+    <span class="n">bitbucket_oauth_access_token_secret</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">repository_oauth_access_token_secret</span>
+ 
+    <span class="c"># Bitbucket OAuth Authentication</span>
+    <span class="n">bitbucket</span> <span class="o">=</span> <span class="n">Bitbucket</span><span class="p">(</span><span class="n">bitbucket_username</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">bitbucket_oauth_access_token</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">bitbucket_oauth_access_token_secret</span><span class="p">:</span>
+        
+        <span class="n">bitbucket</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="n">bitbucket_consumer_key</span><span class="p">,</span> <span class="n">bitbucket_consumer_secret</span><span class="p">,</span> <span class="s">&#39;http://127.0.0.1:8000/&#39;</span><span class="p">)</span>
+        
+        <span class="c"># Open a webbrowser and get the token</span>
+        <span class="n">webbrowser</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="s">&#39;AUTHENTICATE&#39;</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="n">bitbucket</span><span class="o">.</span><span class="n">access_token</span><span class="p">))</span>
+        
+        <span class="c"># Copy the verifier field from the URL in the browser into the console</span>
+        <span class="n">oauth_verifier</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Enter verifier from url [oauth_verifier]&#39;</span><span class="p">)</span>
+        <span class="n">success</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bitbucket</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">oauth_verifier</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;OAuth verification with Bitbucket repository failed. Could not proceed. Please check the Consumer Key and Consumer Secret provided in the Settings page. (bitbucket: </span><span class="si">%s</span><span class="s">, bitbucket username: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error_message</span><span class="p">,</span> <span class="n">bitbucket</span><span class="p">,</span> <span class="n">bitbucket_username</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">ProjectSetupError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">error_message</span><span class="p">)</span>
+
+        <span class="n">settings</span><span class="o">.</span><span class="n">repository_oauth_access_token</span> <span class="o">=</span> <span class="n">bitbucket</span><span class="o">.</span><span class="n">access_token</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">repository_oauth_access_token_secret</span> <span class="o">=</span> <span class="n">bitbucket</span><span class="o">.</span><span class="n">access_token_secret</span>
+        <span class="n">settings</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="k">else</span><span class="p">:</span>    
+        
+        <span class="n">bitbucket</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="n">bitbucket_consumer_key</span><span class="p">,</span> <span class="n">bitbucket_consumer_secret</span><span class="p">,</span> <span class="s">&#39;http://127.0.0.1:8000/&#39;</span><span class="p">,</span> <span class="n">bitbucket_oauth_access_token</span><span class="p">,</span> <span class="n">bitbucket_oauth_access_token_secret</span><span class="p">)</span>
+
+    <span class="c"># Test repository accessibility via Bitbucket API</span>
+    <span class="c">#test_repository_slug = settings.test_repository_slug ---&gt; still to be added in Settings model</span>
+    <span class="n">success</span><span class="p">,</span> <span class="n">test_repository</span> <span class="o">=</span> <span class="n">bitbucket</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">TEST_REPOSITORY_SLUG</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+        <span class="c"># failed to establish connection to the repository. cannot proceed. prompt for retry.</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Authentication with Bitbucket repository failed. Could not proceed. (bitbucket: </span><span class="si">%s</span><span class="s">, bitbucket username: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error_message</span><span class="p">,</span> <span class="n">bitbucket</span><span class="p">,</span> <span class="n">bitbucket_username</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">ProjectSetupError</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">error_message</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">bitbucket</span>
+</div>
+<div class="viewcode-block" id="clone_template"><a class="viewcode-back" href="../../projects.html#projects.utils.clone_template">[docs]</a><span class="k">def</span> <span class="nf">clone_template</span><span class="p">(</span><span class="n">project_working_directory</span><span class="p">,</span> <span class="n">default_project_folder_name</span><span class="p">,</span> <span class="n">project_folder_name</span><span class="p">,</span> <span class="n">project_template_ssh</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is where the template is cloned from Jumpstart&#39;s repository.</span>
+
+<span class="sd">    :param project_working_directory: Path where the cloned template is located.</span>
+<span class="sd">    :param default_project_folder_name: The default name for the project&#39;s folder.</span>
+<span class="sd">    :param project_template_ssh: The Bitbucket SSH key to be used for cloning the template.</span>
+
+<span class="sd">    Raises: :py:class:`ProjectSetupError`</span>
+
+<span class="sd">    Cloning of the template is executed by running a command at the terminal using :py:func:`subprocess.call()`.</span>
+<span class="sd">    ::</span>
+
+<span class="sd">      return_code = subprocess.call(clone_template_command, shell=True)</span>
+
+<span class="sd">    where ``return_code`` stores the status of the called command, and ``clone_template_command`` </span>
+<span class="sd">    is a pre-defined command that executes *git clone*.</span>
+
+<span class="sd">    .. note:: You can visit `The official Documentation of</span>
+<span class="sd">     Git &lt;http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository&gt;`_ for a better understanding of `git clone` and other related commands.</span>
+
+<span class="sd">    Two other functions are called to finish the process of cloning the project template, </span>
+<span class="sd">    the :py:func:`change_project_name()` and :py:func:`create_superuser_fixtures()`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">clone_template_command</span> <span class="o">=</span> <span class="s">&#39;git clone </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">project_template_ssh</span><span class="p">,</span> <span class="n">project_working_directory</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">clone_template_command</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">return_code</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">clone_template_command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">return_code</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Cloning of template failed. Could not proceed. Child was terminated by signal. (return code: </span><span class="si">%s</span><span class="s">, template ssh: </span><span class="si">%s</span><span class="s">, directory: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">return_code</span><span class="p">,</span> <span class="n">project_template_ssh</span><span class="p">,</span> <span class="n">project_working_directory</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">ProjectSetupError</span><span class="p">(</span><span class="s">&quot;Cloning of template failed. Could not proceed. [Return code: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="o">-</span><span class="n">return_code</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;]&quot;</span><span class="p">)</span>
+
+        <span class="n">change_project_name</span><span class="p">(</span><span class="n">project_working_directory</span><span class="p">,</span> <span class="n">default_project_folder_name</span><span class="p">,</span> <span class="n">project_folder_name</span><span class="p">)</span>
+
+        <span class="n">project_base_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_working_directory</span><span class="p">,</span> <span class="n">project_folder_name</span><span class="p">)</span>
+        
+        <span class="n">create_superuser_fixtures</span><span class="p">(</span><span class="n">project_base_directory</span><span class="p">)</span>   
+
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">os_error</span><span class="p">:</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Cloning of template failed. Could not proceed. (Execution failed: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="n">os_error</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ProjectSetupError</span><span class="p">(</span><span class="s">&quot;Cloning of template failed. Could not proceed. [Exception: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">os_error</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;]&quot;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="change_project_name"><a class="viewcode-back" href="../../projects.html#projects.utils.change_project_name">[docs]</a><span class="k">def</span> <span class="nf">change_project_name</span><span class="p">(</span><span class="n">base_directory</span><span class="p">,</span> <span class="n">default_project_folder_name</span><span class="p">,</span> <span class="n">project_folder_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Renames the default `project_name` of the cloned template folder into the actual project&#39;s name.</span>
+
+<span class="sd">    :param base_directory: Path where the cloned template is located.</span>
+<span class="sd">    :param default_project_folder_name: The default name for the project&#39;s folder.</span>
+<span class="sd">    :param project_folder_name: Serves as the new folder name of the template.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># INFO: it also traverses the ../.git/ directory. Should we skip or ok?</span>
+    <span class="k">for</span> <span class="n">file_name</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">base_directory</span><span class="p">):</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_directory</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="n">change_project_name</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">default_project_folder_name</span><span class="p">,</span> <span class="n">project_folder_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">default_project_folder_name</span> <span class="o">==</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+                <span class="n">new_project_folder_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_directory</span><span class="p">,</span> <span class="n">project_folder_name</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">renames</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">new_project_folder_path</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">file_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;.py&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fileinput</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">default_project_folder_name</span><span class="p">,</span> <span class="n">project_folder_name</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="create_superuser_fixtures"><a class="viewcode-back" href="../../projects.html#projects.utils.create_superuser_fixtures">[docs]</a><span class="k">def</span> <span class="nf">create_superuser_fixtures</span><span class="p">(</span><span class="n">project_base_directory</span><span class="p">):</span>
+    <span class="c"># [June] NOTE: might deprecate this depending on final template structure.</span>
+    <span class="c"># Might be easier and faster if superuser fixture was already included in template.</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a *superuser* to the database.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fixtures_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">project_base_directory</span><span class="p">,</span> <span class="s">&quot;fixtures&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">fixtures_directory</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">fixtures_directory</span><span class="p">)</span>
+    <span class="n">initial_data_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fixtures_directory</span><span class="p">,</span> <span class="s">&quot;initial_data.json&quot;</span><span class="p">)</span>
+    <span class="n">initial_data</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">initial_data_path</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">)</span>
+    <span class="n">initial_data</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;[{&quot;pk&quot;: 1, &quot;model&quot;: &quot;contenttypes.contenttype&quot;, &quot;fields&quot;: {&quot;model&quot;: &quot;logentry&quot;, &quot;name&quot;: &quot;log entry&quot;, &quot;app_label&quot;: &quot;admin&quot;}}, {&quot;pk&quot;: 2, &quot;model&quot;: &quot;contenttypes.contenttype&quot;, &quot;fields&quot;: {&quot;model&quot;: &quot;permission&quot;, &quot;name&quot;: &quot;permission&quot;, &quot;app_label&quot;: &quot;auth&quot;}}, {&quot;pk&quot;: 3, &quot;model&quot;: &quot;contenttypes.contenttype&quot;, &quot;fields&quot;: {&quot;model&quot;: &quot;group&quot;, &quot;name&quot;: &quot;group&quot;, &quot;app_label&quot;: &quot;auth&quot;}}, {&quot;pk&quot;: 4, &quot;model&quot;: &quot;contenttypes.contenttype&quot;, &quot;fields&quot;: {&quot;model&quot;: &quot;user&quot;, &quot;name&quot;: &quot;user&quot;, &quot;app_label&quot;: &quot;auth&quot;}}, {&quot;pk&quot;: 5, &quot;model&quot;: &quot;contenttypes.contenttype&quot;, &quot;fields&quot;: {&quot;model&quot;: &quot;contenttype&quot;, &quot;name&quot;: &quot;content type&quot;, &quot;app_label&quot;: &quot;contenttypes&quot;}}, {&quot;pk&quot;: 6, &quot;model&quot;: &quot;contenttypes.contenttype&quot;, &quot;fields&quot;: {&quot;model&quot;: &quot;session&quot;, &quot;name&quot;: &quot;session&quot;, &quot;app_label&quot;: &quot;sessions&quot;}}, {&quot;pk&quot;: 1, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;add_logentry&quot;, &quot;name&quot;: &quot;Can add log entry&quot;, &quot;content_type&quot;: 1}}, {&quot;pk&quot;: 2, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;change_logentry&quot;, &quot;name&quot;: &quot;Can change log entry&quot;, &quot;content_type&quot;: 1}}, {&quot;pk&quot;: 3, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;delete_logentry&quot;, &quot;name&quot;: &quot;Can delete log entry&quot;, &quot;content_type&quot;: 1}}, {&quot;pk&quot;: 4, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;add_permission&quot;, &quot;name&quot;: &quot;Can add permission&quot;, &quot;content_type&quot;: 2}}, {&quot;pk&quot;: 5, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;change_permission&quot;, &quot;name&quot;: &quot;Can change permission&quot;, &quot;content_type&quot;: 2}}, {&quot;pk&quot;: 6, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;delete_permission&quot;, &quot;name&quot;: &quot;Can delete permission&quot;, &quot;content_type&quot;: 2}}, {&quot;pk&quot;: 7, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;add_group&quot;, &quot;name&quot;: &quot;Can add group&quot;, &quot;content_type&quot;: 3}}, {&quot;pk&quot;: 8, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;change_group&quot;, &quot;name&quot;: &quot;Can change group&quot;, &quot;content_type&quot;: 3}}, {&quot;pk&quot;: 9, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;delete_group&quot;, &quot;name&quot;: &quot;Can delete group&quot;, &quot;content_type&quot;: 3}}, {&quot;pk&quot;: 10, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;add_user&quot;, &quot;name&quot;: &quot;Can add user&quot;, &quot;content_type&quot;: 4}}, {&quot;pk&quot;: 11, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;change_user&quot;, &quot;name&quot;: &quot;Can change user&quot;, &quot;content_type&quot;: 4}}, {&quot;pk&quot;: 12, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;delete_user&quot;, &quot;name&quot;: &quot;Can delete user&quot;, &quot;content_type&quot;: 4}}, {&quot;pk&quot;: 13, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;add_contenttype&quot;, &quot;name&quot;: &quot;Can add content type&quot;, &quot;content_type&quot;: 5}}, {&quot;pk&quot;: 14, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;change_contenttype&quot;, &quot;name&quot;: &quot;Can change content type&quot;, &quot;content_type&quot;: 5}}, {&quot;pk&quot;: 15, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;delete_contenttype&quot;, &quot;name&quot;: &quot;Can delete content type&quot;, &quot;content_type&quot;: 5}}, {&quot;pk&quot;: 16, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;add_session&quot;, &quot;name&quot;: &quot;Can add session&quot;, &quot;content_type&quot;: 6}}, {&quot;pk&quot;: 17, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;change_session&quot;, &quot;name&quot;: &quot;Can change session&quot;, &quot;content_type&quot;: 6}}, {&quot;pk&quot;: 18, &quot;model&quot;: &quot;auth.permission&quot;, &quot;fields&quot;: {&quot;codename&quot;: &quot;delete_session&quot;, &quot;name&quot;: &quot;Can delete session&quot;, &quot;content_type&quot;: 6}}, {&quot;pk&quot;: 1, &quot;model&quot;: &quot;auth.user&quot;, &quot;fields&quot;: {&quot;username&quot;: &quot;admin&quot;, &quot;first_name&quot;: &quot;&quot;, &quot;last_name&quot;: &quot;&quot;, &quot;is_active&quot;: true, &quot;is_superuser&quot;: true, &quot;is_staff&quot;: true, &quot;last_login&quot;: &quot;2014-05-02T08:19:38.959Z&quot;, &quot;groups&quot;: [], &quot;user_permissions&quot;: [], &quot;password&quot;: &quot;pbkdf2_sha256$12000$XYuNBA5ije6y$FAMhxNddNQSIL9cE44DMWl6FjtORSlpwbgYvi+Vbmwc=&quot;, &quot;email&quot;: &quot;&quot;, &quot;date_joined&quot;: &quot;2014-05-02T08:19:38.959Z&quot;}}]&#39;</span><span class="p">);</span>
+    <span class="n">initial_data</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="create_new_repository"><a class="viewcode-back" href="../../projects.html#projects.utils.create_new_repository">[docs]</a><span class="k">def</span> <span class="nf">create_new_repository</span><span class="p">(</span><span class="n">bitbucket</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">project_repository</span><span class="p">,</span> <span class="n">project_working_directory</span><span class="p">,</span> <span class="n">ssh_host_alias</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a new Bitbucket project repository. It also commits based on the project&#39;s template used.</span>
+
+<span class="sd">    :param bitbucket: The authorized :py:class:`Bitbucket` object.</span>
+<span class="sd">    :param project: The current project&#39;s instance.</span>
+<span class="sd">    :param project_repository: A :py:class:`ProjectRepository` instance.</span>
+<span class="sd">    :param project_working_directory: The directory of the template.</span>
+<span class="sd">    :param ssh_host_alias: The host alias used for accessing Jumpstart&#39;s repository.</span>
+
+<span class="sd">    Raises: :py:class:`ProjectSetupError`</span>
+
+<span class="sd">    First, :py:class:`Bitbucket` checks if a repository with the same name as the project name has already been created.</span>
+<span class="sd">    </span>
+<span class="sd">    ::</span>
+
+<span class="sd">      success, project_bitbucket_repository = bitbucket.repository.get(project_repository_slug)</span>
+
+<span class="sd">    If no repository exists, then the ``repository.create()`` is called to create a repository into the Jumpstart&#39;s account.</span>
+<span class="sd">    </span>
+<span class="sd">    ::</span>
+
+<span class="sd">      bitbucket.repository.create(project_repository_slug)</span>
+
+<span class="sd">    where ``project_repository_slug`` is the desired name for the project repository.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Check if bitbucket project with same identifier already exists</span>
+    <span class="n">project_repository_slug</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">slug</span>
+    <span class="n">success</span><span class="p">,</span> <span class="n">project_bitbucket_repository</span> <span class="o">=</span> <span class="n">bitbucket</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project_repository_slug</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Repository with the same identifier/name already exists. (project: </span><span class="si">%s</span><span class="s">, slug: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">project_repository_slug</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">ProjectSetupError</span><span class="p">(</span><span class="s">&quot;Repository with the same identifier/name already exists.&quot;</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s">&#39;creating new repository...&#39;</span>
+    <span class="n">repository_created</span><span class="p">,</span> <span class="n">project_bitbucket_repository</span> <span class="o">=</span> <span class="n">bitbucket</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">project_repository_slug</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">repository_created</span><span class="p">:</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Failed to create new repository. (project: </span><span class="si">%s</span><span class="s">, slug: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">project_repository_slug</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">ProjectSetupError</span><span class="p">(</span><span class="s">&quot;Failed to create new repository.&quot;</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s">&#39;new repository is created&#39;</span>
+    <span class="n">bitbucket</span><span class="o">.</span><span class="n">repository</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">project</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+
+    <span class="c"># Set the repository access details</span>
+    <span class="n">bitbucket_username</span> <span class="o">=</span> <span class="n">bitbucket</span><span class="o">.</span><span class="n">username</span>
+    <span class="n">project_repository</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;https://bitbucket.org/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bitbucket_username</span><span class="p">,</span> <span class="n">project_repository_slug</span><span class="p">)</span>
+    <span class="n">project_repository</span><span class="o">.</span><span class="n">repo_https</span> <span class="o">=</span> <span class="s">&#39;https://</span><span class="si">%s</span><span class="s">@bitbucket.org/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">.git&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bitbucket_username</span><span class="p">,</span> <span class="n">bitbucket_username</span><span class="p">,</span> <span class="n">project_repository_slug</span><span class="p">)</span>
+    <span class="n">project_repository</span><span class="o">.</span><span class="n">repo_ssh</span> <span class="o">=</span> <span class="s">&#39;git@bitbucket.org:</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">.git&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bitbucket_username</span><span class="p">,</span> <span class="n">project_repository_slug</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">repo_ssh</span> <span class="o">=</span> <span class="n">set_ssh_host_alias</span><span class="p">(</span><span class="n">project_repository</span><span class="o">.</span><span class="n">repo_ssh</span><span class="p">,</span> <span class="n">REPOSITORY_HOST</span><span class="p">,</span> <span class="n">ssh_host_alias</span><span class="p">)</span> 
+        <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;fab push:&#39;</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">project_working_directory</span><span class="p">,</span> <span class="n">project</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">repo_ssh</span><span class="p">)</span>
+        <span class="n">return_code</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">return_code</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Pushing of project files to repository failed. Could not proceed. Fabfile execution terminated. (return code: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="n">return_code</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ProjectSetupError</span><span class="p">(</span><span class="s">&quot;Pushing of project files to repository failed. Could not proceed. [Return code: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="o">-</span><span class="n">return_code</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;]&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">os_error</span><span class="p">:</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Creation of New Repository failed. Could not proceed. (Execution failed: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="n">os_error</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ProjectSetupError</span><span class="p">(</span><span class="s">&quot;Creation of New Repository failed. Could not proceed. [Exception: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">os_error</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;]&quot;</span><span class="p">)</span>
+
+    <span class="c"># Set the repository access details</span>
+    <span class="n">project_repository</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="set_ssh_host_alias"><a class="viewcode-back" href="../../projects.html#projects.utils.set_ssh_host_alias">[docs]</a><span class="k">def</span> <span class="nf">set_ssh_host_alias</span><span class="p">(</span><span class="n">repo_ssh</span><span class="p">,</span> <span class="n">repository_host</span><span class="p">,</span> <span class="n">ssh_host_alias</span><span class="p">):</span>
+    <span class="c"># Replace REPOSITORY_HOST(&quot;bitbucket.org&quot;) with [SSH host alias] for multiple SSH keys or multiple bitbucket accounts</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Replaces the default host (`bitbucket.org`) with `SSH Host Alias` to be used for accessing the repository.</span>
+<span class="sd"> </span>
+<span class="sd">    :param repo_ssh: The SSH Key of the repository.</span>
+<span class="sd">    :param repository_host: The username of the Bitbucket account used.</span>
+<span class="sd">    :param ssh_host_alias: Host alias used for multiple accounts.</span>
+
+<span class="sd">    :returns: ``repo_ssh``</span>
+
+<span class="sd">    .. note:: This is crucial for it will ensure users to be able to create a project and push the files to its corresponding repository, given that the user already has its own Bitbucket account(one that is not related to Jumpstart).For more information, please do read more about `SSH Host Alias &lt;https://confluence.atlassian.com/pages/viewpage.action?pageId=271943168#ConfiguremultipleSSHidentitiesforGitBash,MacOSX,&amp;Linux-CreatemultipleidentitiesforMacOSX,GitBash,andLinux&gt;`_.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ssh_host_alias</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">repo_ssh</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">repository_host</span><span class="p">,</span> <span class="n">ssh_host_alias</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">repo_ssh</span>
+</div>
+<div class="viewcode-block" id="setup_test_site"><a class="viewcode-back" href="../../projects.html#projects.utils.setup_test_site">[docs]</a><span class="k">def</span> <span class="nf">setup_test_site</span><span class="p">(</span><span class="n">project_test_site</span><span class="p">,</span> <span class="n">project_repository</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets up a *test-site* for the project.</span>
+
+<span class="sd">    :param project_test_site: The project&#39;s :py:class:`ProjectTestSite` instance.</span>
+<span class="sd">    :param project_repository: The project&#39;s :py:class:`ProjectRepository` instance.</span>
+<span class="sd">    :param user: Current user logged in.</span>
+
+<span class="sd">    :returns: ``True`` if successful, otherwise ``False``.</span>
+
+<span class="sd">    In creating the test site, the following command is called in the terminal using :py:func:`subprocess.call()`.</span>
+
+<span class="sd">    ::</span>
+
+<span class="sd">      command = &quot;fab deploy:&#39;%s,%s&#39;&quot; % (project_repo, project_name)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># start creating/setting-up test site</span>
+    <span class="n">update_setup_status_working</span><span class="p">(</span><span class="n">project_test_site</span><span class="p">)</span>
+    
+    <span class="c"># TODO - Create/Setup test site</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">project_test_site</span><span class="o">.</span><span class="n">project</span>
+    <span class="n">project_name</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">project_name</span> <span class="o">=</span> <span class="n">project_name</span><span class="o">.</span><span class="n">replace</span> <span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="s">&quot;_&quot;</span><span class="p">)</span>
+    <span class="n">project_repo</span> <span class="o">=</span> <span class="n">set_ssh_host_alias</span><span class="p">(</span><span class="n">project_repository</span><span class="o">.</span><span class="n">repo_ssh</span><span class="p">,</span> <span class="n">REPOSITORY_HOST</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">ssh_host_alias</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;fab deploy:&#39;</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">project_repo</span><span class="p">,</span> <span class="n">project_name</span><span class="p">)</span>
+        <span class="n">return_code</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c"># failed to create test site - prompt for retry</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;fab rollback:&#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="n">project_name</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">error_message</span> <span class="o">=</span>  <span class="s">&quot;Fabric deployment failed. Test Site not created.&quot;</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> (user: </span><span class="si">%s</span><span class="s">, return code: </span><span class="si">%s</span><span class="s">, project name: </span><span class="si">%s</span><span class="s">, project repo: </span><span class="si">%s</span><span class="s">, domain host: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error_message</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">return_code</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span class="n">project_repo</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">domain_host</span><span class="p">))</span>
+            <span class="n">update_setup_status_failed</span><span class="p">(</span><span class="n">project_test_site</span><span class="p">,</span> <span class="n">error_message</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="c"># done creating test site</span>
+        <span class="n">project_test_site</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">project_name</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">domain_host</span><span class="p">)</span>
+        <span class="n">update_setup_status_done</span><span class="p">(</span><span class="n">project_test_site</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">True</span>            
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">os_error</span><span class="p">:</span>
+        <span class="c"># failed to create test site - prompt for retry</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;fab rollback:&#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span> <span class="n">project_name</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">error_message</span> <span class="o">=</span>  <span class="s">&quot;</span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">os_error</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">os_error</span><span class="p">))</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> (user: </span><span class="si">%s</span><span class="s">, return code: </span><span class="si">%s</span><span class="s">, project name: </span><span class="si">%s</span><span class="s">, project repo: </span><span class="si">%s</span><span class="s">, domain host: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">error_message</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">return_code</span><span class="p">,</span> <span class="n">project_name</span><span class="p">,</span> <span class="n">project_repo</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">domain_host</span><span class="p">))</span>
+        <span class="n">update_setup_status_failed</span><span class="p">(</span><span class="n">project_test_site</span><span class="p">,</span> <span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</div>
+<div class="viewcode-block" id="setup_jira_space"><a class="viewcode-back" href="../../projects.html#projects.utils.setup_jira_space">[docs]</a><span class="k">def</span> <span class="nf">setup_jira_space</span><span class="p">(</span><span class="n">project_management</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets up *JIRA* project space</span>
+
+<span class="sd">    :param project_management: The project&#39;s :py:class:`ProjectManagement` instance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># start creating/setting-up JIRA project space</span>
+    <span class="n">update_setup_status_working</span><span class="p">(</span><span class="n">project_management</span><span class="p">)</span>
+    
+    <span class="c"># TODO - Create JIRA project space</span>
+
+    <span class="c"># done creating JIRA project space</span>
+    <span class="n">project_management</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s">&quot;http://www.test.com&quot;</span>
+    <span class="n">update_setup_status_done</span><span class="p">(</span><span class="n">project_management</span><span class="p">)</span>
+    
+    <span class="c"># failed to create JIRA project space - prompt for retry</span>
+    <span class="c"># update_setup_status_failed(project_management)</span>
+</div>
+<div class="viewcode-block" id="setup_redmine_space"><a class="viewcode-back" href="../../projects.html#projects.utils.setup_redmine_space">[docs]</a><span class="k">def</span> <span class="nf">setup_redmine_space</span><span class="p">(</span><span class="n">project_management</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets up *Redmine* project space.</span>
+
+<span class="sd">    :param project_management: The project&#39;s :py:class:`ProjectManagement` instance.</span>
+<span class="sd">    :param user: Current user logged in.</span>
+
+<span class="sd">    :returns: ``True`` if setup was successful, otherwise ``False``</span>
+
+<span class="sd">    First it retrieves the necessary `user&#39;s` credentials needed for Redmine in the :py:class:`Settings` module.</span>
+
+<span class="sd">    Afterwhich, the Redmine&#39;s project space is now created using :py:class:`Redmine` from the `Redmine Python package`.</span>
+
+<span class="sd">    ::</span>
+
+<span class="sd">      redmine = Redmine(redmine_url, key=redmine_key, version=&#39;2.3.3&#39;, requests={&#39;verify&#39;: False})</span>
+<span class="sd">      redmine_project = redmine.project.create(name=project_name, identifier=project_identifier, description=project_description)</span>
+
+<span class="sd">    where ``redmine_url`` and ``redmine_key`` are all retrieved from the user&#39;s :py:class:`Settings`.</span>
+
+<span class="sd">    .. note:: Visit `Python-Redmine &lt;https://pypi.python.org/pypi/python-redmine&gt;`_ for more details.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c"># start creating/setting-up REDMINE project space</span>
+        <span class="n">update_setup_status_working</span><span class="p">(</span><span class="n">project_management</span><span class="p">)</span>
+        
+        <span class="c"># create REDMINE project space</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="n">project_management</span><span class="o">.</span><span class="n">project</span>
+        <span class="n">project_name</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">project_identifier</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">slug</span>
+        <span class="n">project_description</span> <span class="o">=</span> <span class="n">project</span><span class="o">.</span><span class="n">description</span>
+
+        <span class="n">redmine_url</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">redmine_url</span>
+        <span class="n">redmine_key</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">redmine_key</span>
+        <span class="n">redmine</span> <span class="o">=</span> <span class="n">Redmine</span><span class="p">(</span><span class="n">redmine_url</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">redmine_key</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s">&#39;2.3.3&#39;</span><span class="p">,</span> <span class="n">requests</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;verify&#39;</span><span class="p">:</span> <span class="bp">False</span><span class="p">})</span>
+        <span class="n">redmine_project</span> <span class="o">=</span> <span class="n">redmine</span><span class="o">.</span><span class="n">project</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">project_name</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="n">project_identifier</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="n">project_description</span><span class="p">)</span>
+
+        <span class="c"># done creating REDMINE project space</span>
+        <span class="n">project_management</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="n">redmine_url</span><span class="p">,</span> <span class="s">&quot;projects/&quot;</span> <span class="o">+</span> <span class="n">project_identifier</span><span class="p">)</span>
+        <span class="n">update_setup_status_done</span><span class="p">(</span><span class="n">project_management</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="c"># failed to create REDMINE project - prompt for retry</span>
+        <span class="n">error_message</span> <span class="o">=</span>  <span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+        <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;REDMINE project space creation failed. (</span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="n">error_message</span><span class="p">)</span>
+        <span class="n">update_setup_status_failed</span><span class="p">(</span><span class="n">project_management</span><span class="p">,</span> <span class="n">error_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">False</span>
+</div>
+<div class="viewcode-block" id="project_setup_retry"><a class="viewcode-back" href="../../projects.html#projects.utils.project_setup_retry">[docs]</a><span class="k">def</span> <span class="nf">project_setup_retry</span><span class="p">(</span><span class="n">project_id</span><span class="p">,</span> <span class="n">setup_type</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retries creating a specific project tool.</span>
+
+<span class="sd">    :param project_id: Current project&#39;s id.</span>
+<span class="sd">    :param setup_type: What tool to attempt a retry in creating.</span>
+<span class="sd">    :param user: Current user logged in.</span>
+
+<span class="sd">    :returns: ``True`` if successful, otherwise ``False``.</span>
+
+<span class="sd">    It checks the ``setup_type`` and determine what *setup* function to use.</span>
+
+<span class="sd">    ::</span>
+
+<span class="sd">      setup_repository()</span>
+<span class="sd">      setup_test_site()</span>
+<span class="sd">      setup_jira_space()</span>
+<span class="sd">      setup_redmine_space()</span>
+
+<span class="sd">    and all these functions will return either ``True`` or ``False`` for its creation status.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># retry/create selected setup type for project</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">project_id</span><span class="p">)</span>
+    
+    <span class="n">success</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">if</span> <span class="s">&quot;repository&quot;</span> <span class="o">==</span> <span class="n">setup_type</span><span class="p">:</span>
+        <span class="n">project_repository</span> <span class="o">=</span> <span class="n">ProjectRepository</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="n">setup_repository</span><span class="p">(</span><span class="n">project_repository</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s">&quot;test-site&quot;</span> <span class="o">==</span> <span class="n">setup_type</span><span class="p">:</span>
+        <span class="n">project_test_site</span> <span class="o">=</span> <span class="n">ProjectTestSite</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span>
+        <span class="n">project_repository</span> <span class="o">=</span> <span class="n">ProjectRepository</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="n">setup_test_site</span><span class="p">(</span><span class="n">project_test_site</span><span class="p">,</span> <span class="n">project_repository</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s">&quot;jira&quot;</span> <span class="o">==</span> <span class="n">setup_type</span><span class="p">:</span>
+        <span class="n">project_management</span> <span class="o">=</span> <span class="n">ProjectManagement</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span> <span class="n">pm_tool</span><span class="o">=</span><span class="n">ProjectManagement</span><span class="o">.</span><span class="n">JIRA</span><span class="p">)</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="n">setup_jira_space</span><span class="p">(</span><span class="n">project_management</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s">&quot;redmine&quot;</span> <span class="o">==</span> <span class="n">setup_type</span><span class="p">:</span>
+        <span class="n">project_management</span> <span class="o">=</span> <span class="n">ProjectManagement</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span> <span class="n">pm_tool</span><span class="o">=</span><span class="n">ProjectManagement</span><span class="o">.</span><span class="n">REDMINE</span><span class="p">)</span>
+        <span class="n">success</span> <span class="o">=</span>  <span class="n">setup_redmine_space</span><span class="p">(</span><span class="n">project_management</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">success</span><span class="p">;</span>
+</div>
+<div class="viewcode-block" id="update_setup_status"><a class="viewcode-back" href="../../projects.html#projects.utils.update_setup_status">[docs]</a><span class="k">def</span> <span class="nf">update_setup_status</span><span class="p">(</span><span class="n">status_model</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">remarks</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;General update of the status of a given PM tool.</span>
+
+<span class="sd">    :param status_model: The tool passed to update its status.</span>
+<span class="sd">    :param status: Current tool status.</span>
+<span class="sd">    :param remarks: Remarks regarding tool status.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">status_model</span><span class="o">.</span><span class="n">remarks</span> <span class="o">=</span> <span class="n">remarks</span>
+    <span class="n">status_model</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+    <span class="n">status_model</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="update_setup_status_new"><a class="viewcode-back" href="../../projects.html#projects.utils.update_setup_status_new">[docs]</a><span class="k">def</span> <span class="nf">update_setup_status_new</span><span class="p">(</span><span class="n">status_model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the status of a given PM tool to ``NEW``.</span>
+
+<span class="sd">    :param status_model: The tool passed to update its status.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">update_setup_status</span><span class="p">(</span><span class="n">status_model</span><span class="p">,</span> <span class="n">ProjectSetupStatus</span><span class="o">.</span><span class="n">NEW</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="update_setup_status_skip"><a class="viewcode-back" href="../../projects.html#projects.utils.update_setup_status_skip">[docs]</a><span class="k">def</span> <span class="nf">update_setup_status_skip</span><span class="p">(</span><span class="n">status_model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the status of a given PM tool to ``SKIP``.</span>
+
+<span class="sd">    :param status_model: The tool passed to update its status.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">update_setup_status</span><span class="p">(</span><span class="n">status_model</span><span class="p">,</span> <span class="n">ProjectSetupStatus</span><span class="o">.</span><span class="n">SKIP</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="update_setup_status_working"><a class="viewcode-back" href="../../projects.html#projects.utils.update_setup_status_working">[docs]</a><span class="k">def</span> <span class="nf">update_setup_status_working</span><span class="p">(</span><span class="n">status_model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the status of a given PM tool to ``WORKING``.</span>
+
+<span class="sd">    :param status_model: The tool passed to update its status.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">update_setup_status</span><span class="p">(</span><span class="n">status_model</span><span class="p">,</span> <span class="n">ProjectSetupStatus</span><span class="o">.</span><span class="n">WORKING</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="update_setup_status_failed"><a class="viewcode-back" href="../../projects.html#projects.utils.update_setup_status_failed">[docs]</a><span class="k">def</span> <span class="nf">update_setup_status_failed</span><span class="p">(</span><span class="n">status_model</span><span class="p">,</span> <span class="n">error_message</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the status of a given PM tool to ``FAILED``.</span>
+
+<span class="sd">    :param status_model: The tool passed to update its status.</span>
+<span class="sd">    :param error_message: Error message that was fetched from its creation process.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">update_setup_status</span><span class="p">(</span><span class="n">status_model</span><span class="p">,</span> <span class="n">ProjectSetupStatus</span><span class="o">.</span><span class="n">FAILED</span><span class="p">,</span> <span class="n">error_message</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="update_setup_status_done"><a class="viewcode-back" href="../../projects.html#projects.utils.update_setup_status_done">[docs]</a><span class="k">def</span> <span class="nf">update_setup_status_done</span><span class="p">(</span><span class="n">status_model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the status of a given PM tool to ``DONE``.</span>
+
+<span class="sd">    :param status_model: The tool passed to update its status.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">update_setup_status</span><span class="p">(</span><span class="n">status_model</span><span class="p">,</span> <span class="n">ProjectSetupStatus</span><span class="o">.</span><span class="n">DONE</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="create_NGINX_file"><a class="viewcode-back" href="../../projects.html#projects.utils.create_NGINX_file">[docs]</a><span class="k">def</span> <span class="nf">create_NGINX_file</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates the necessary NGINX file needed to run the project to a test site.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">current_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">conf_path</span> <span class="o">=</span> <span class="n">current_directory</span> <span class="o">+</span> <span class="s">&quot;/auth_db/jumpstart_nginx.conf&quot;</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span> <span class="p">(</span><span class="n">conf_path</span><span class="p">,</span> <span class="n">current_directory</span><span class="p">)</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Ingenuity.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

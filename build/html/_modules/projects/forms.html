@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>projects.forms &mdash; Jumpstart 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.1.0/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Jumpstart 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/logo.png">
+          Jumpstart</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Jumpstart <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for projects.forms</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">django.template.defaultfilters</span> <span class="kn">import</span> <span class="n">slugify</span>
+
+<span class="kn">from</span> <span class="nn">projects</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">utils</span><span class="p">,</span> 
+    <span class="n">validators</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">projects.exceptions</span> <span class="kn">import</span> <span class="n">ProjectSetupError</span>
+<span class="kn">from</span> <span class="nn">projects.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Project</span><span class="p">,</span> 
+    <span class="n">ProjectManagement</span><span class="p">,</span> 
+    <span class="n">ProjectRepository</span><span class="p">,</span> 
+    <span class="n">ProjectSetupStatus</span><span class="p">,</span>
+    <span class="n">ProjectTemplate</span><span class="p">,</span>
+    <span class="n">ProjectTestSite</span><span class="p">,</span>
+    <span class="n">ProjectType</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">LOGGER</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;projects&#39;</span><span class="p">)</span>
+<span class="n">SETUP_OPTION_CHOICES</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;Setup a preview site for my project&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;Setup JIRA project space&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;Setup Redmine project space&#39;</span><span class="p">))</span>
+
+
+
+<div class="viewcode-block" id="ProjectAddForm"><a class="viewcode-back" href="../../projects.html#projects.forms.ProjectAddForm">[docs]</a><span class="k">class</span> <span class="nc">ProjectAddForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class handled the insertion of new Project instances.</span>
+
+<span class="sd">    **Class Attributes:**</span>
+<span class="sd">        * **name (str)**: refers to the project&#39;s name.\n</span>
+<span class="sd">        * **description (str)**: short description about the project.\n</span>
+<span class="sd">        * **company (str)**: company where project is affiliated to.\n</span>
+<span class="sd">        * **project_type (radio)**: project type ranges in either Web or Mobile.\n</span>
+<span class="sd">        * **project_template (radio)**: templates corresponding to a certain template.\n</span>
+<span class="sd">        * **setup_option (multiplechoicefield)**: choices regarding as to what project tools to include to project.\n</span>
+<span class="sd">        * **setup_test_site, setup_jira, setup_redmine (boolean)**: flag for setting up Project Management(PM) tools.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span>             <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Project Name&quot;</span><span class="p">)</span>
+    <span class="n">description</span>      <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Project Description&quot;</span><span class="p">)</span>
+    <span class="n">company</span>          <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Client Name&quot;</span><span class="p">)</span>
+    <span class="n">project_type</span>     <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Project Type&quot;</span><span class="p">)</span>
+    <span class="n">project_template</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Project Template&quot;</span><span class="p">)</span>
+    <span class="n">setup_option</span>     <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">MultipleChoiceField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                                                 <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">CheckboxSelectMultiple</span><span class="p">,</span> 
+                                                 <span class="n">choices</span><span class="o">=</span><span class="n">SETUP_OPTION_CHOICES</span><span class="p">)</span>
+    <span class="n">setup_test_site</span>  <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">setup_jira</span>       <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">setup_redmine</span>    <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span>  <span class="o">=</span> <span class="n">Project</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;description&#39;</span><span class="p">,</span> <span class="s">&#39;company&#39;</span><span class="p">,</span> <span class="s">&#39;project_type&#39;</span><span class="p">,</span> <span class="s">&#39;project_template&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Assign appropriate model object to  project_type and project_template</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;project_type&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;project_type&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">ProjectType</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;project_type&#39;</span><span class="p">))</span>
+            <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;project_type&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;project_template&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;project_template&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ProjectTemplate</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;project_template&#39;</span><span class="p">))</span>
+            <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;project_template&#39;</span><span class="p">]</span>
+
+        <span class="c"># Retrieve user setup options selection</span>
+        <span class="n">setup_choices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;setup_option&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_test_site</span> <span class="o">=</span>  <span class="s">&#39;1&#39;</span> <span class="ow">in</span> <span class="n">setup_choices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_jira</span> <span class="o">=</span>  <span class="s">&#39;2&#39;</span> <span class="ow">in</span> <span class="n">setup_choices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_redmine</span> <span class="o">=</span>  <span class="s">&#39;3&#39;</span> <span class="ow">in</span> <span class="n">setup_choices</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span>
+
+    <span class="k">def</span> <span class="nf">clean_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validates project&#39;s ``name`` if a project with the same name already exists.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">project_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">Project</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">slug</span><span class="o">=</span><span class="n">slugify</span><span class="p">(</span><span class="n">project_name</span><span class="p">))</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;A Project with the same name already exists. (project name: </span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="n">project_name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="s">u&quot;A Project with the same name already exists.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">project_name</span>
+
+<div class="viewcode-block" id="ProjectAddForm.init_project"><a class="viewcode-back" href="../../projects.html#projects.forms.ProjectAddForm.init_project">[docs]</a>    <span class="k">def</span> <span class="nf">init_project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create new records with initial data for :py:class:`ProjectRepository`, :py:class:`ProjectManagement` and :py:class:`ProjectTestSite` objects.</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">          self.project_repository = ProjectRepository.objects.create(project=project)</span>
+<span class="sd">          self.project_test_site = ProjectTestSite.objects.create(project=project)</span>
+<span class="sd">          self.pm_tool_jira = self.init_pm_tool(project, ProjectManagement.JIRA, not self.setup_jira)</span>
+<span class="sd">          self.pm_tool_redmine = self.init_pm_tool(project, ProjectManagement.REDMINE, not self.setup_redmine)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance</span>
+
+        <span class="c">#Create record for ProjectRepository with initial status=NEW</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_repository</span> <span class="o">=</span> <span class="n">ProjectRepository</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span>
+
+        <span class="c">#Create record for ProjectTestSite with initial status=NEW</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_test_site</span> <span class="o">=</span> <span class="n">ProjectTestSite</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_setup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_test_site</span><span class="p">,</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_test_site</span><span class="p">)</span>
+
+        <span class="c">#Create record for ProjectManagement with initial status=NEW or SKIP (if specified by user)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pm_tool_jira</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_pm_tool</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">ProjectManagement</span><span class="o">.</span><span class="n">JIRA</span><span class="p">,</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_jira</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pm_tool_redmine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_pm_tool</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">ProjectManagement</span><span class="o">.</span><span class="n">REDMINE</span><span class="p">,</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_redmine</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="ProjectAddForm.init_pm_tool"><a class="viewcode-back" href="../../projects.html#projects.forms.ProjectAddForm.init_pm_tool">[docs]</a>    <span class="k">def</span> <span class="nf">init_pm_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">pm_tool_type</span><span class="p">,</span> <span class="n">skip</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Responsible for initializing the project management tool selected.</span>
+
+<span class="sd">        :param project: The current :py:class:`Project` instance.</span>
+<span class="sd">        :param pm_tool_type: Refers to the PM tool selected</span>
+<span class="sd">        :param skip: Flag if specified PM tool is to be set up or not.</span>
+
+<span class="sd">        Creates a :py:class:`ProjectManagement` object given the following parameters.</span>
+<span class="sd">        The resulting object is then passed as a parameter to :py:func:`skip_setup()`.</span>
+
+<span class="sd">        :returns: :py:class:`ProjectManagement` object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pm_tool</span> <span class="o">=</span> <span class="n">ProjectManagement</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="n">project</span><span class="p">,</span> <span class="n">pm_tool</span><span class="o">=</span><span class="n">pm_tool_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skip_setup</span><span class="p">(</span><span class="n">pm_tool</span><span class="p">,</span> <span class="n">skip</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pm_tool</span>
+</div>
+<div class="viewcode-block" id="ProjectAddForm.skip_setup"><a class="viewcode-back" href="../../projects.html#projects.forms.ProjectAddForm.skip_setup">[docs]</a>    <span class="k">def</span> <span class="nf">skip_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">skip</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the creation of the specified PM tool is skipped.\n</span>
+<span class="sd">        Calls :py:func:`projects.utils.update_setup_status_skip()` to update its status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">skip</span><span class="p">:</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">update_setup_status_skip</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ProjectAddForm.create_project"><a class="viewcode-back" href="../../projects.html#projects.forms.ProjectAddForm.create_project">[docs]</a>    <span class="k">def</span> <span class="nf">create_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function is responsible for the backend processing of the automated project creation.</span>
+<span class="sd">        It handles both the initialization of the project and its corresponding project tools.</span>
+
+<span class="sd">        :param user: contains the credentials of the currently logged user which will be used to link to its corresponding project.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises: :py:class:`ProjectSetupError`</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">          self.init_project()</span>
+
+<span class="sd">        The :py:func:`init_project()` function is called to start creation process. It is responsible for creating records related to the project (see its section for more details).</span>
+
+<span class="sd">        Afterwhich it calls four (4) functions from the ``utils`` module which handles the creation/setup of the project tools specified by the user.</span>
+<span class="sd">        ::</span>
+
+<span class="sd">          utils.setup_repository(self.project_repository, user)</span>
+<span class="sd">          utils.setup_test_site(self.project_test_site, self.project_repository)</span>
+<span class="sd">          utils.setup_jira_space(self.pm_tool_jira)</span>
+<span class="sd">          utils.setup_redmine_space(self.pm_tool_redmine, user)</span>
+
+<span class="sd">        Refer to :py:mod:`projects.utils` module for more details regarding each project tool&#39;s function.</span>
+
+<span class="sd">        :returns: ``True`` if successfully initialized, otherwise ``False``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+        
+            <span class="c"># Create a record for Project</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="c"># Create new records with initial data for ProjectRepository, ProjectManagement and ProjectTestSite</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">init_project</span><span class="p">()</span>
+            
+            <span class="c"># Setup BitBucket repository and store details in ProjectRepository</span>
+            <span class="n">utils</span><span class="o">.</span><span class="n">setup_repository</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_repository</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+            <span class="c"># Setup the test site for the new project and store details in ProjectTestSite</span>
+            <span class="c"># (if option is checked by user)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_test_site</span><span class="p">:</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">setup_test_site</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_test_site</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_repository</span><span class="p">)</span>
+
+            <span class="c"># Setup JIRA project space for the new project and store details in ProjectManagement</span>
+            <span class="c"># (if option is checked by user)        </span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_jira</span><span class="p">:</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">setup_jira_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pm_tool_jira</span><span class="p">)</span>
+
+            <span class="c"># Setup REDMINE project space for the new project and store details in ProjectManagement</span>
+            <span class="c"># (if option is checked by user)        </span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_redmine</span><span class="p">:</span>
+                <span class="n">utils</span><span class="o">.</span><span class="n">setup_redmine_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pm_tool_redmine</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">except</span> <span class="n">ProjectSetupError</span> <span class="k">as</span> <span class="n">project_setup_error</span><span class="p">:</span>
+            <span class="c"># TODO Log error and display to screen</span>
+            <span class="n">LOGGER</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Project setup failed. (</span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="n">project_setup_error</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">False</span><span class="p">;</span>
+</div>
+    <span class="k">def</span> <span class="nf">project_type_pk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">project_type</span><span class="o">.</span><span class="n">pk</span>
+
+    <span class="k">def</span> <span class="nf">project_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProjectType</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">project_type_web_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_type_pk</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">project_type_mobile_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_type_pk</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="k">def</span> <span class="nf">project_template_pk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="o">.</span><span class="n">project_template</span><span class="o">.</span><span class="n">pk</span>
+
+    <span class="k">def</span> <span class="nf">project_template_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_template_pk</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">project_templates_web</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProjectTemplate</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">project_type</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">project_templates_mobile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProjectTemplate</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">project_type</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="ProjectEditForm"><a class="viewcode-back" href="../../projects.html#projects.forms.ProjectEditForm">[docs]</a><span class="k">class</span> <span class="nc">ProjectEditForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles the editing of :py:class:`Project` objects.</span>
+
+<span class="sd">    *Class Variables*</span>
+<span class="sd">        * **company (str)**: company where project is affiliated to.\n</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">company</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Project</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;description&#39;</span><span class="p">,</span> <span class="s">&#39;company&#39;</span><span class="p">)</span>
+        <span class="n">widgets</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;description&#39;</span><span class="p">:</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;rows&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">})}</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Ingenuity.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

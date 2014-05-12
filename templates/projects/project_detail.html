@@ -1,0 +1,113 @@
+{% extends "projects/projects_base.html" %}
+{% load staticfiles %}
+{% load project_extras %}
+
+{% block head_title %}Project Details - {{ project.name }}{% endblock %}
+
+{% block page_header_title %}Project Details{% endblock %}
+
+{% block page_header_controls %}
+    <a href="{{ project.get_edit_url }}" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span> &nbsp; Edit Project
+    </a>
+    <a href="{% url 'project_add' %}" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus"></span> &nbsp; New Project
+    </a>
+{% endblock %}
+
+{% block left_content %}
+    
+    <div class="row">
+        <div class="col-md-12">
+            <!-- PROJECT NAME -->
+            <h2>{{ project.name }}</h2> 
+            <span class="label label-default">Project Name</span>
+        </div>
+    </div>
+
+    <div class="row section-container">
+        <div class="col-md-4">
+            <!-- PROJECT TYPE -->
+            <h4><strong>{{ project.project_type.name }}</strong></h4>
+            <p>{{ project.project_type.description }}</p>
+            <span class="label label-default">Project Type</span>
+        </div>
+
+        <div class="col-md-8">
+            <!-- PROJECT TEMPLATE -->
+            <h4><strong>{{ project.project_template.name }}</strong></h4>
+            <p>{{ project.project_template.description }}</p>
+            <span class="label label-default">Project Template</span>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <!-- PROJECT DESCRIPTION + Company / Client Name -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">About the Project</h3>
+            </div>
+            <div class="panel-body">
+                {{ project.description|linebreaks }}
+                <p><strong>Client: </strong><em>{% if project.company %}{{ project.company }}{% else%}None specified{% endif %}</em></p>
+            </div>
+        </div>
+
+        <!-- Setup Details: PROJECT REPOSITORY -->
+        {% set project_repository = project.get_project_repository %}
+        {% set status_model = project_repository %}
+        {% include "projects/project_setup_info_repository.html" %}
+
+        <!-- Setup Details: REDMINE -->
+        {% set pm_tool_redmine = project.get_project_pm_tool_redmine %}
+        {% set status_model = pm_tool_redmine %}
+        {% include "projects/project_setup_info_redmine.html" %}
+
+        <!-- Setup Details: JIRA -->
+        {% set pm_tool_jira = project.get_project_pm_tool_jira %}
+        {% set status_model = pm_tool_jira %}
+        {% include "projects/project_setup_info_jira.html" %}
+
+        <!-- Setup Details: TEST SITE -->
+        {% set project_test_site = project.get_project_test_site %}
+        {% set status_model = project_test_site %}
+        {% include "projects/project_setup_info_testsite.html" %}
+
+    </div>
+{% endblock %}
+
+{% block show_alert_messages %}
+    function showProjectSetupSuccessMessage(item) {
+        showSuccessMessage("<strong><u>"+item+"</u></strong> created successfully. See below for details.");
+    }
+
+    function showProjectSetupFailedMessage(item) {
+        showErrorMessage("<strong><u>"+item+"</u></strong> creation/setup FAILED. See below for details.");
+    }
+
+    {% if success %}
+        {% if setup_type == "project" %}
+            showProjectSetupSuccessMessage("New Project");
+        {% elif setup_type == "repository" %}
+            showProjectSetupSuccessMessage("Project Repository")
+        {% elif setup_type == "jira" %}
+            showProjectSetupSuccessMessage("JIRA Project Space");
+        {% elif setup_type == "redmine" %}
+            showProjectSetupSuccessMessage("Redmine Project Space");
+        {% elif setup_type == "test-site" %}
+            showProjectSetupSuccessMessage("Project Test Site");
+        {% endif %}
+    {% else %}
+        {% if setup_type == "project" %}
+            showProjectSetupFailedMessage("New Project");
+        {% elif setup_type == "repository" %}
+            showProjectSetupFailedMessage("Project Repository")
+        {% elif setup_type == "jira" %}
+            showProjectSetupFailedMessage("JIRA Project Space");
+        {% elif setup_type == "redmine" %}
+            showProjectSetupFailedMessage("Redmine Project Space");
+        {% elif setup_type == "test-site" %}
+            showProjectSetupFailedMessage("Project Test Site");
+        {% endif %}
+    {% endif %}
+{% endblock %}

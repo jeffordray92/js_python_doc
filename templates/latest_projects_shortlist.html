@@ -1,0 +1,28 @@
+<!-- Display List of Projects (ONLY when user is authenticated) -->
+{% if user.is_authenticated %}
+    <div class="list-group">
+        <a href="#" class="list-group-item active">
+            <span class="glyphicon glyphicon-{{ glyphicon_name }}"></span> &nbsp; <strong>{{ list_title }}</strong>
+        </a>
+        {% if latest_projects %}
+            {% for project in latest_projects %}
+                <a href="{{ project.get_absolute_url }}" class="list-group-item">
+                    <h4 class="list-group-item-heading">{{ project.name }}</h4>
+                    <p class="list-group-item-text">{{ project.description|truncatechars:100 }}</p>
+                </a>
+            {% endfor %}
+            <a href="{% url 'projects' %}" class="list-group-item">
+                <h4 class="list-group-item-heading">
+                    See all projects <span class="glyphicon glyphicon-chevron-right"></span>
+                </h4>
+            </a>
+        {% else %}
+            <a href="{% url 'project_add' %}" class="list-group-item">
+                <p class="list-group-item-text">No projects yet.</p>
+                <button type="button" class="btn btn-primary btn-xs">
+                    Create a Project
+                </button>
+            </a>
+        {% endif %}
+    </div>
+{% endif %}

@@ -1,0 +1,27 @@
+{% extends "projects/project_setup_info_base.html" %}
+
+{% block panel_title %}Project Repository{% endblock %}
+
+{% block setup_type %}repository{% endblock %}
+
+{% block succes_details %}
+    {% with field_label="Repository Home" field_value=project_repository.url link=project_repository.url has_next=True %}
+    {% include "form_field_view.html" %}
+    {% endwith %}
+
+    {% with field_label="Clone HTTPS" field_value="git clone "|add:project_repository.repo_https has_next=True %}
+    {% include "form_field_view.html" %}
+    {% endwith %}
+
+    {% with field_label="Clone SSH" field_value="git clone "|add:project_repository.repo_ssh %}
+    {% include "form_field_view.html" %}
+    {% endwith %}
+{% endblock %}
+
+{% block failed_message %}
+    Project Repository Creation <strong>FAILED</strong>.
+{% endblock %}
+
+{% block create_message %}
+    Project Repository not yet created.
+{% endblock %}

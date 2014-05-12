@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>projects.models &mdash; Jumpstart 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.1.0/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Jumpstart 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/logo.png">
+          Jumpstart</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Jumpstart <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <h1>Source code for projects.models</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.core.urlresolvers</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.template.defaultfilters</span> <span class="kn">import</span> <span class="n">slugify</span>
+
+<span class="kn">from</span> <span class="nn">model_utils.models</span> <span class="kn">import</span> <span class="n">TimeStampedModel</span>
+
+<span class="kn">from</span> <span class="nn">projects.validators</span> <span class="kn">import</span> <span class="n">validate_alphanumeric</span><span class="p">,</span> <span class="n">validate_not_spaces</span>
+
+
+
+<div class="viewcode-block" id="ProjectType"><a class="viewcode-back" href="../../projects.html#projects.models.ProjectType">[docs]</a><span class="k">class</span> <span class="nc">ProjectType</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for the project&#39;s *type*.</span>
+
+<span class="sd">    **Class Attributes:**</span>
+<span class="sd">        * **name (str)**: project type&#39;s name\n</span>
+<span class="sd">        * **description (str)**: project type&#39;s short description\n</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span>             <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> 
+    <span class="n">description</span>      <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span> 
+    
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> - </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="ProjectTemplate"><a class="viewcode-back" href="../../projects.html#projects.models.ProjectTemplate">[docs]</a><span class="k">class</span> <span class="nc">ProjectTemplate</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for the project&#39;s *templates*.</span>
+
+<span class="sd">    **Class Attributes:**</span>
+<span class="sd">        * **name (str)**: project templates&#39;s name.\n</span>
+<span class="sd">        * **description (str)**: project templates&#39;s short description.\n</span>
+<span class="sd">        * **project_type (fk)**: project template to base on given project type.\n</span>
+<span class="sd">        * **repo_https (url)**: Bitbucket repository&#39;s HTTPS url.\n</span>
+<span class="sd">        * **repo_ssh (str)**: Bitbucket repository&#39;s SSH url.\n</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span>         <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> 
+    <span class="n">description</span>  <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span> 
+    <span class="n">project_type</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">ProjectType</span><span class="p">)</span>
+    <span class="n">repo_https</span>   <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">URLField</span><span class="p">()</span>
+    <span class="n">repo_ssh</span>     <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span> 
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> - </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="Project"><a class="viewcode-back" href="../../projects.html#projects.models.Project">[docs]</a><span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">TimeStampedModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for the *project*.</span>
+
+<span class="sd">    **Class Attributes:**</span>
+<span class="sd">        * **name (str)**: project type&#39;s name.\n</span>
+<span class="sd">        * **description (str)**: project type&#39;s short description.\n</span>
+<span class="sd">        * **company (str)**: company a project is affiliated to.\n</span>
+<span class="sd">        * **project_type (fk)**: a project&#39;s type.\n</span>
+<span class="sd">        * **project_template (fk)**: a project&#39;s template.\n</span>
+<span class="sd">        * **slug (str)**: a project&#39;s slug value (for url usage).\n</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span>               <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_alphanumeric</span><span class="p">,</span> <span class="n">validate_not_spaces</span><span class="p">])</span> 
+    <span class="n">description</span>        <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">validate_not_spaces</span><span class="p">])</span>
+    <span class="n">company</span>            <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">project_type</span>       <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">ProjectType</span><span class="p">)</span>
+    <span class="n">project_template</span>   <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">ProjectTemplate</span><span class="p">)</span>
+    <span class="n">slug</span>               <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">SlugField</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+            <span class="c"># Newly created object, so set slug</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">slug</span> <span class="o">=</span> <span class="n">slugify</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">Project</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> - </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Project.get_absolute_url"><a class="viewcode-back" href="../../projects.html#projects.models.Project.get_absolute_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_absolute_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a url for a specified project&#39;s detail page&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s">&#39;project_details&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&#39;slug&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">slug</span><span class="p">})</span>
+</div>
+<div class="viewcode-block" id="Project.get_edit_url"><a class="viewcode-back" href="../../projects.html#projects.models.Project.get_edit_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_edit_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a url for a specified project&#39;s edit page&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s">&#39;project_edit&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;id&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s">&#39;slug&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">slug</span><span class="p">})</span>
+</div>
+<div class="viewcode-block" id="Project.get_project_repository"><a class="viewcode-back" href="../../projects.html#projects.models.Project.get_project_repository">[docs]</a>    <span class="k">def</span> <span class="nf">get_project_repository</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves all :py:class:`ProjectRepository` objects&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ProjectRepository</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Project.get_project_pm_tool_jira"><a class="viewcode-back" href="../../projects.html#projects.models.Project.get_project_pm_tool_jira">[docs]</a>    <span class="k">def</span> <span class="nf">get_project_pm_tool_jira</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves all `JIRA` :py:class:`ProjectManagement` objects&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ProjectManagement</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">pm_tool</span><span class="o">=</span><span class="n">ProjectManagement</span><span class="o">.</span><span class="n">JIRA</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Project.get_project_pm_tool_redmine"><a class="viewcode-back" href="../../projects.html#projects.models.Project.get_project_pm_tool_redmine">[docs]</a>    <span class="k">def</span> <span class="nf">get_project_pm_tool_redmine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves all `Redmine` :py:class:`ProjectManagement` objects&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ProjectManagement</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">pm_tool</span><span class="o">=</span><span class="n">ProjectManagement</span><span class="o">.</span><span class="n">REDMINE</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Project.get_project_test_site"><a class="viewcode-back" href="../../projects.html#projects.models.Project.get_project_test_site">[docs]</a>    <span class="k">def</span> <span class="nf">get_project_test_site</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieves all :py:class:`ProjectTestSite` objects&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ProjectTestSite</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="ProjectSetupStatus"><a class="viewcode-back" href="../../projects.html#projects.models.ProjectSetupStatus">[docs]</a><span class="k">class</span> <span class="nc">ProjectSetupStatus</span><span class="p">(</span><span class="n">TimeStampedModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for the project&#39;s *setup status*.</span>
+
+<span class="sd">    **Constants:**</span>
+<span class="sd">    ::</span>
+
+<span class="sd">      NEW = &#39;N&#39;</span>
+<span class="sd">      SKIP = &#39;S&#39;</span>
+<span class="sd">      WORKING = &#39;W&#39;</span>
+<span class="sd">      FAILED = &#39;F&#39;</span>
+<span class="sd">      DONE = &#39;D&#39;</span>
+<span class="sd">      STATUS_CHOICES = (</span>
+<span class="sd">          (NEW, &#39;New&#39;),</span>
+<span class="sd">          (SKIP, &#39;Skip&#39;),</span>
+<span class="sd">          (WORKING, &#39;Working&#39;),</span>
+<span class="sd">          (FAILED, &#39;Failed&#39;),</span>
+<span class="sd">          (DONE, &#39;Done&#39;),</span>
+<span class="sd">      )</span>
+
+<span class="sd">    **Class Attributes:**</span>
+<span class="sd">        * **status (str)**: project type&#39;s name. Based on ``STATUS_CHOICES``.\n</span>
+<span class="sd">        * **url (url)**: project status&#39; url.\n</span>
+<span class="sd">        * **remarks (str)**: status&#39; remarks.\n</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NEW</span> <span class="o">=</span> <span class="s">&#39;N&#39;</span>
+    <span class="n">SKIP</span> <span class="o">=</span> <span class="s">&#39;S&#39;</span>
+    <span class="n">WORKING</span> <span class="o">=</span> <span class="s">&#39;W&#39;</span>
+    <span class="n">FAILED</span> <span class="o">=</span> <span class="s">&#39;F&#39;</span>
+    <span class="n">DONE</span> <span class="o">=</span> <span class="s">&#39;D&#39;</span>
+    <span class="n">STATUS_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">NEW</span><span class="p">,</span> <span class="s">&#39;New&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">SKIP</span><span class="p">,</span> <span class="s">&#39;Skip&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">WORKING</span><span class="p">,</span> <span class="s">&#39;Working&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">FAILED</span><span class="p">,</span> <span class="s">&#39;Failed&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">DONE</span><span class="p">,</span> <span class="s">&#39;Done&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                              <span class="n">choices</span><span class="o">=</span><span class="n">STATUS_CHOICES</span><span class="p">,</span>
+                              <span class="n">default</span><span class="o">=</span><span class="n">NEW</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">URLField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">remarks</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">abstract</span> <span class="o">=</span> <span class="bp">True</span>
+
+<div class="viewcode-block" id="ProjectSetupStatus.is_success"><a class="viewcode-back" href="../../projects.html#projects.models.ProjectSetupStatus.is_success">[docs]</a>    <span class="k">def</span> <span class="nf">is_success</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a ``Done`` status.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">DONE</span>
+</div>
+<div class="viewcode-block" id="ProjectSetupStatus.is_failed"><a class="viewcode-back" href="../../projects.html#projects.models.ProjectSetupStatus.is_failed">[docs]</a>    <span class="k">def</span> <span class="nf">is_failed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a ``Failed`` status.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">FAILED</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">WORKING</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="ProjectSetupStatus.is_skipped"><a class="viewcode-back" href="../../projects.html#projects.models.ProjectSetupStatus.is_skipped">[docs]</a>    <span class="k">def</span> <span class="nf">is_skipped</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a ``Skip`` status.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SKIP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">NEW</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="ProjectRepository"><a class="viewcode-back" href="../../projects.html#projects.models.ProjectRepository">[docs]</a><span class="k">class</span> <span class="nc">ProjectRepository</span><span class="p">(</span><span class="n">ProjectSetupStatus</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for the project&#39;s setup status.</span>
+
+<span class="sd">    **Class Attributes:**</span>
+<span class="sd">        * **project (fk)**: :py:class:`Project` instance.\n</span>
+<span class="sd">        * **repo_https (url)**: Bitbucket repository&#39;s HTTPS url.\n</span>
+<span class="sd">        * **repo_ssh (str)**: Bitbucket repository&#39;s SSH url.\n</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">project</span>    <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Project</span><span class="p">)</span>
+    <span class="n">repo_https</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">URLField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">repo_ssh</span>   <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> - </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">repo_https</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">repo_ssh</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="ProjectManagement"><a class="viewcode-back" href="../../projects.html#projects.models.ProjectManagement">[docs]</a><span class="k">class</span> <span class="nc">ProjectManagement</span><span class="p">(</span><span class="n">ProjectSetupStatus</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for the project&#39;s setup status.</span>
+
+<span class="sd">    **Constants:**</span>
+<span class="sd">    ::</span>
+
+<span class="sd">      JIRA = &#39;J&#39;</span>
+<span class="sd">      REDMINE = &#39;R&#39;</span>
+<span class="sd">      PM_TOOL_CHOICES = (</span>
+<span class="sd">          (JIRA, &#39;Jira&#39;),</span>
+<span class="sd">          (REDMINE, &#39;Redmine&#39;),</span>
+<span class="sd">      )&#39;</span>
+
+<span class="sd">    *Class Attributes:*</span>
+<span class="sd">        * **project (fk)**: :py:class:`Project` instance.\n</span>
+<span class="sd">        * **pm_tool (str)**: PM tool to be used. Based on ``PM_TOOL_CHOICES``.\n</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">JIRA</span> <span class="o">=</span> <span class="s">&#39;J&#39;</span>
+    <span class="n">REDMINE</span> <span class="o">=</span> <span class="s">&#39;R&#39;</span>
+    <span class="n">PM_TOOL_CHOICES</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="n">JIRA</span><span class="p">,</span> <span class="s">&#39;Jira&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">REDMINE</span><span class="p">,</span> <span class="s">&#39;Redmine&#39;</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Project</span><span class="p">)</span>
+    <span class="n">pm_tool</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">PM_TOOL_CHOICES</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+
+    </div>
+<div class="viewcode-block" id="ProjectTestSite"><a class="viewcode-back" href="../../projects.html#projects.models.ProjectTestSite">[docs]</a><span class="k">class</span> <span class="nc">ProjectTestSite</span><span class="p">(</span><span class="n">ProjectSetupStatus</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class for the `test-site`</span>
+
+<span class="sd">    **Class Attributes:**</span>
+<span class="sd">        * **project (fk):** :py:class:`Project` instance.\n</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">project</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Project</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Ingenuity.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

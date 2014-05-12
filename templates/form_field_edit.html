@@ -1,0 +1,17 @@
+{% load project_extras %}
+<div class="form-group {% if field.errors %}has-error{% endif %}">
+    {% if not hide_label %}
+        <label class="control-label" for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required %} (Optional){% endif %}</label>
+    {% endif %}
+    {{ field | add_css:"form-control" }}
+     {% if field.help_text %}
+         <span class="help-block">
+            <p>{{ field.help_text }}</p>
+        </span>
+    {% endif %}
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <p class="text-danger">{{ error|escape }}</p>
+        {% endfor %}
+    {% endif %}
+</div>

@@ -1,0 +1,31 @@
+{% extends "projects/projects_base.html" %}
+
+{% block head_title %}Edit Project - {{ project.name }}{% endblock %}
+
+{% block page_header_title %}Edit Project{% endblock %}
+
+{% block page_header_controls %}
+    <a href="{% url 'project_add' %}" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus"></span> &nbsp; New Project
+    </a>
+{% endblock %}
+
+{% block left_content %}
+    <form action='.' method='post'>
+        {% csrf_token %}
+
+        {% with form.name as field %}
+        {% include "form_field_edit.html" %}
+        {% endwith %}
+
+        {% with form.description as field %}
+        {% include "form_field_edit.html" %}
+        {% endwith %}
+
+        {% with form.company as field %}
+        {% include "form_field_edit.html" %}
+        {% endwith %}
+
+        <hr/><button type="submit" class="btn btn-primary">Update Project</button>
+    </form>
+{% endblock %}

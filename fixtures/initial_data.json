@@ -1,0 +1,128 @@
+[
+{
+    "pk": 1, 
+    "model": "projects.projecttype", 
+    "fields": {
+        "name": "Web Application", 
+        "description": "A Django-powered website"
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.projecttype", 
+    "fields": {
+        "name": "Mobile Application", 
+        "description": "iOS or Android"
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.projecttemplate", 
+    "fields": {
+        "repo_https": "https://jumpstart_demo@bitbucket.org/jumpstart_demo/template-web-starter.git", 
+        "repo_ssh": "git@bitbucket.org:jumpstart_demo/template-web-starter.git", 
+        "name": "Starter", 
+        "project_type": 1, 
+        "description": "A basic Django project"
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.projecttemplate", 
+    "fields": {
+        "repo_https": "https://jumpstart_demo@bitbucket.org/jumpstart_demo/template-web-real-estate.git", 
+        "repo_ssh": "git@bitbucket.org:jumpstart_demo/template-web-real-estate.git", 
+        "name": "Real Estate", 
+        "project_type": 1, 
+        "description": "A basic Django project"
+    }
+},
+{
+    "pk": 3, 
+    "model": "projects.projecttemplate", 
+    "fields": {
+        "repo_https": "https://jumpstart_demo@bitbucket.org/jumpstart_demo/template-web-cms.git", 
+        "repo_ssh": "git@bitbucket.org:jumpstart_demo/template-web-cms.git", 
+        "name": "CMS", 
+        "project_type": 1, 
+        "description": "A basic Django project"
+    }
+},
+{
+    "pk": 4, 
+    "model": "projects.projecttemplate", 
+    "fields": {
+        "repo_https": "https://jumpstart_demo@bitbucket.org/jumpstart_demo/template-web-social.git", 
+        "repo_ssh": "git@bitbucket.org:jumpstart_demo/template-web-social.git", 
+        "name": "Social", 
+        "project_type": 1, 
+        "description": "A basic Django project"
+    }
+},
+{
+    "pk": 5, 
+    "model": "projects.projecttemplate", 
+    "fields": {
+        "repo_https": "https://jumpstart_demo@bitbucket.org/jumpstart_demo/template-web-e-commerce.git", 
+        "repo_ssh": "git@bitbucket.org:jumpstart_demo/template-web-e-commerce.git", 
+        "name": "E-Commerce", 
+        "project_type": 1, 
+        "description": "A basic Django project"
+    }
+},
+{
+    "pk": 6, 
+    "model": "projects.projecttemplate", 
+    "fields": {
+        "repo_https": "https://jumpstart_demo@bitbucket.org/jumpstart_demo/template-web-custom.git", 
+        "repo_ssh": "git@bitbucket.org:jumpstart_demo/template-web-custom.git", 
+        "name": "Custom", 
+        "project_type": 1, 
+        "description": "A basic Django project"
+    }
+},
+{
+    "pk": 7, 
+    "model": "projects.projecttemplate", 
+    "fields": {
+        "repo_https": "https://jumpstart_demo@bitbucket.org/jumpstart_demo/template-mobile-ios.git", 
+        "repo_ssh": "git@bitbucket.org:jumpstart_demo/template-mobile-ios.git", 
+        "name": "iOS Application", 
+        "project_type": 2, 
+        "description": "A simple iOS mobile application"
+    }
+},
+{
+    "pk": 8, 
+    "model": "projects.projecttemplate", 
+    "fields": {
+        "repo_https": "https://jumpstart_demo@bitbucket.org/jumpstart_demo/template-mobile-android.git", 
+        "repo_ssh": "git@bitbucket.org:jumpstart_demo/template-mobile-android.git", 
+        "name": "Android Application", 
+        "project_type": 2, 
+        "description": "A simple Android mobile application"
+    }
+},
+{
+    "pk": 1, 
+    "model": "profiles.settings", 
+    "fields": {
+        "user": 1, 
+        "repository_username": "jumpstart_demo",
+        "repository_consumer_key": "w5wWRXUJhTynRyhEMh",
+        "repository_consumer_secret": "wYBeGa32MmA3rjRUKPFY2VaMBj2FCGng",
+        "repository_oauth_access_token": "MzNeHvcvKdtfCVfHj7",
+        "repository_oauth_access_token_secret": "6cpZmWJdMbvwJGFLxdAfJPnxCEnSK8aB",
+        "ssh_host_alias": "jumpstart_demo",
+        "test_repository_slug": "jumpstart-test-repository",
+        "projects_working_directory": "jumpstart/projects/",
+        "default_project_folder_name": "project_name",
+        "jira_key": "None", 
+        "redmine_url": "http://jumpstart.m.redmine.org",
+        "redmine_key": "2ca59e64fb928f713d0919d59680725d724daad8",
+        "domain_host": "127.0.0.1:8888",
+        "domain_user": "user",
+        "domain_path": "jumpstart/testsite/"
+    }
+}
+]

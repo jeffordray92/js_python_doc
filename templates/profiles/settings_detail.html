@@ -1,0 +1,98 @@
+{% extends "profiles/settings_base.html" %}
+
+{% block head_title %}Settings{% endblock %}
+
+{% block nav_administration_active %}
+    class="active"
+{% endblock %}
+
+{% block page_header_title %}Settings{% endblock %}
+
+{% block page_header_controls %}
+    <a href="edit/{{ admin_settings.id }}" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span> &nbsp; Edit Settings
+    </a>
+{% endblock %}
+
+{% block left_content %}
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> &nbsp; <strong>Bitbucket Repository</strong></div>
+      <div class="panel-body">
+        {% with field_label=admin_settings.fields.repository_username field_value=admin_settings.repository_username has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.repository_consumer_key field_value=admin_settings.repository_consumer_key has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.repository_consumer_secret field_value=admin_settings.repository_consumer_secret has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.repository_oauth_access_token field_value=admin_settings.repository_oauth_access_token has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.repository_oauth_access_token_secret field_value=admin_settings.repository_oauth_access_token_secret has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.ssh_host_alias field_value=admin_settings.ssh_host_alias has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.test_repository_slug field_value=admin_settings.test_repository_slug has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.projects_working_directory field_value=admin_settings.projects_working_directory has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.default_project_folder_name field_value=admin_settings.default_project_folder_name %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> &nbsp; <strong>JIRA Project Management</strong></div>
+      <div class="panel-body">
+        {% with field_label=admin_settings.fields.jira_key field_value=admin_settings.jira_key %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+      </div>
+    </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> &nbsp; <strong>Redmine Project Management</strong></div>
+      <div class="panel-body">
+        {% with field_label=admin_settings.fields.redmine_url field_value=admin_settings.redmine_url link=admin_settings.redmine_url has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.redmine_key field_value=admin_settings.redmine_key %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><span class="glyphicon glyphicon-cog"></span> &nbsp; <strong>Test Site</strong></div>
+      <div class="panel-body">
+        {% with field_label=admin_settings.fields.domain_host field_value=admin_settings.domain_host link=admin_settings.domain_host has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.domain_user field_value=admin_settings.domain_user has_next=True %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+
+        {% with field_label=admin_settings.fields.domain_path field_value=admin_settings.domain_path %}
+        {% include "form_field_view.html" %}
+        {% endwith %}
+      </div>
+    </div>
+{% endblock %}

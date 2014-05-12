@@ -1,0 +1,160 @@
+{% extends "projects/projects_base.html" %}
+
+{% block head_title %}Create New Project{% endblock %}
+
+{% block page_header_title %}Create New Project{% endblock %}
+
+{% block left_content %}
+    <form role="form" action="{% url 'project_add' %}" method="POST">
+        <fieldset>
+            {% csrf_token %}
+
+            <legend>Project Information</legend>
+
+            {% comment %}
+            <h4>My Project,</h4>
+            {% endcomment %}
+
+            <!-- INPUT: PROJECT NAME -->
+            {% with form.name as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            {% comment %}
+            <h4>which is about</h4>
+            {% endcomment %}
+
+            <!-- INPUT: PROJECT DESCRIPTION -->
+            {% with form.description as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            <!-- INPUT: CLIENT NAME -->
+            {% with form.company as field %}
+            {% include "form_field_edit.html" %}
+            {% endwith %}
+
+            <hr/><legend>Project Template</legend>
+
+            <h4>This Project is a...</h4>
+
+            <!-- SELECTION: PROJECT TYPE -->
+            {% with field=form.project_type field_name="project_type" field_label="project type" field_value=form.project_type_pk options=form.project_types  %}
+            {% include "form_custom_radio_field.html" %}
+            {% endwith %}
+
+            <div id="id_project_templates">
+
+                <!-- TEMPLATES SELECTION: WEB APPLICATION -->
+                <div id="id_templates_web">
+
+                        <h4>Select a template for your web application</h4>
+
+                        {% with field=form.project_template field_name="project_template" field_label="project template" field_value=form.project_template_pk options=form.project_templates_web %}
+                        {% include "form_custom_radio_field.html" %}
+                        {% endwith %}
+
+                </div>
+
+                <!-- TEMPLATES SELECTION: MOBILE APPLICATION -->
+                <div id="id_templates_mobile">
+                        
+                        <h4>Select a template for your mobile application</h4>
+                        
+                        {% with field=form.project_template field_name="project_template" field_label="project template" field_value=form.project_template_pk options=form.project_templates_mobile %}
+                        {% include "form_custom_radio_field.html" %}
+                        {% endwith %}
+
+                </div>
+
+            </div>
+
+            <div id="id_setup_options" class="row">
+                <div class="col-md-12">
+
+                    <hr/><legend>Additional Setup Options</legend>
+
+                    <!-- SETUP OPTIONS SELECTION -->
+                    <div class="checkbox">
+                        {{form.setup_option}}
+                    </div>
+                   
+                </div>
+            </div>
+
+            <!-- SUBMIT BUTTON -->
+            <div id="id_setup_options" class="row">
+                <div class="col-md-12">
+                    <hr/><button type="submit" class="btn btn-primary">Create Project</button>
+                </div>
+            </div>
+        <fieldset>
+    </form>
+{% endblock left_content %}
+
+{% block show_alert_messages %}
+    <!-- Display Errors -->
+    {% if form.errors %}
+        showErrorMessage("Please correct the error{{ form.errors|pluralize }} below.");
+    {% endif %}
+{% endblock %}
+
+{% block extra_script %}
+<script type="text/javascript">
+    $("#id_templates_web").show();
+    $("#id_templates_mobile").show();
+
+    //hide the templates if type is not yet selected by default
+    {% if not form.project_type_web_selected %}
+        $("#id_templates_web").hide();
+    {% endif %}
+    {% if not form.project_type_mobile_selected %}
+        $("#id_templates_mobile").hide();
+    {% endif %}
+
+    // show the web application templates when selected
+    $("#id_project_type_1").click(function() {
+        $("#id_templates_web").show();
+        $("#id_templates_mobile").hide();
+    });
+
+    // show the mobile application templates when selected
+    $("#id_project_type_2").click(function() {
+        $("#id_templates_web").hide();
+        $("#id_templates_mobile").show();
+    }); 
+
+    setRadioLookAndFeel("project_template");
+    setRadioLookAndFeel("project_type");
+
+    function setRadioLookAndFeel(name) {
+        $(function() {
+            $("input[name='"+name+"']").each(function() {
+                if ($(this).prop('checked')) {
+                    $(this).hide();
+                    $(this).next().hide()
+                    $(this).after("<div class='radioButton radioButtonOn'> "+ $(this).next().html() +" </div>");
+                } else { 
+                    $(this).hide();
+                    $(this).next().hide()
+                    $(this).after("<div class='radioButton radioButtonOff'> "+ $(this).next().html() +" </div>");
+                }
+            });
+        });
+        $("input[name='"+name+"']").change(function() {
+            $("input[name='"+name+"']").each(function() {
+                setCustomRadioButtonOff($(this));
+            }); 
+            setCustomRadioButtonOn($(this));
+        });
+    }
+
+    function setCustomRadioButtonOn(radioButton) {
+        radioButton.next().removeClass('radioButtonOff').addClass('radioButtonOn');
+    }
+
+    function setCustomRadioButtonOff(radioButton) {
+        radioButton.next().removeClass('radioButtonOn').addClass('radioButtonOff');
+    }
+</script>
+{% endblock %}

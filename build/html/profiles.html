@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Profiles package &mdash; Jumpstart 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/simplex/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Jumpstart 1.0 documentation" href="index.html" />
+    <link rel="up" title="Modules" href="modules.html" />
+    <link rel="next" title="Projects package" href="projects.html" />
+    <link rel="prev" title="Main Jumpstart package" href="jumpstart.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="_static/logo.png">
+          Jumpstart</a>
+        <span class="navbar-text navbar-version pull-left"><b>1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Jumpstart <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Profiles package</a><ul>
+<li><a class="reference internal" href="#module-profiles.admin">profiles.admin module</a></li>
+<li><a class="reference internal" href="#module-profiles.models">profiles.models module</a></li>
+<li><a class="reference internal" href="#module-profiles.urls">profiles.urls module</a></li>
+<li><a class="reference internal" href="#module-profiles.validators">profiles.validators module</a></li>
+<li><a class="reference internal" href="#profiles-views-module">profiles.views module</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="jumpstart.html" title="Previous Chapter: Main Jumpstart package"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; Main Jumpstart p...</span>
+    </a>
+  </li>
+  <li>
+    <a href="projects.html" title="Next Chapter: Projects package"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">Projects package &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="profiles-package">
+<h1>Profiles package<a class="headerlink" href="#profiles-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-profiles.admin">
+<span id="profiles-admin-module"></span><h2>profiles.admin module<a class="headerlink" href="#module-profiles.admin" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>profiles.admin.py</strong> file involves settings and configurations for the administration page, specific for the Profiles (Settings) models.</p>
+</div>
+<div class="section" id="module-profiles.models">
+<span id="profiles-models-module"></span><h2>profiles.models module<a class="headerlink" href="#module-profiles.models" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>profiles.models.py</strong> file includes the models &#8211; the definitive source of information about your data &#8211; included in the project.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In this set of codes, each attribute of the model represents a specific field in the database.</p>
+</div>
+<dl class="class">
+<dt id="profiles.models.Settings">
+<em class="property">class </em><tt class="descclassname">profiles.models.</tt><tt class="descname">Settings</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/profiles/models.html#Settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#profiles.models.Settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides attributes for the user information and other settings specifications</p>
+<p><strong>Attributes:</strong></p>
+<ol class="arabic">
+<li><p class="first">Foreign Keys:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>user: <tt class="docutils literal"><span class="pre">user</span> <span class="pre">=</span> <span class="pre">models.ForeignKey(User)</span></tt></dt>
+<dd><p class="first last">Taken from <em>django.contrib.auth.models</em>, <em>user</em> signifies that the settings provided are applicable to this certain user.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Project Repository (Bitbucket) Access and Authentication:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>repository_username: <tt class="docutils literal"><span class="pre">repository_username</span> <span class="pre">=</span> <span class="pre">*models.CharField(max_length=200,</span> <span class="pre">null=True,</span> <span class="pre">verbose_name=&quot;Bitbucket</span> <span class="pre">Account&quot;,</span> <span class="pre">validators=[validate_not_spaces,</span> <span class="pre">validate_exclude_space])*</span></tt></dt>
+<dd><p class="first last">Signifies the username for the Bitbucket account where the project will initially be pushed</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>repository_consumer_key: <tt class="docutils literal"><span class="pre">repository_consumer_key</span> <span class="pre">=</span> <span class="pre">*models.CharField(max_length=200,</span> <span class="pre">null=True,</span> <span class="pre">verbose_name=&quot;Consumer</span> <span class="pre">Key&quot;,</span> <span class="pre">validators=[validate_not_spaces,</span> <span class="pre">validate_alphanumeric])*</span></tt></dt>
+<dd><p class="first last">The BitBucket consumer key that the BitBucket API use to identify the user</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>repository_oauth_access_token: <tt class="docutils literal"><span class="pre">repository_oauth_access_token</span> <span class="pre">=</span> <span class="pre">models.CharField(max_length=200,</span> <span class="pre">null=True,</span> <span class="pre">blank</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">verbose_name=&quot;OAuth</span> <span class="pre">Access</span> <span class="pre">Token&quot;,</span> <span class="pre">validators=[validate_not_spaces,</span> <span class="pre">validate_alphanumeric])</span></tt></dt>
+<dd><p class="first last">With this access token, the project can make Bitbucket API calls</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>repository_oauth_access_token_secret: <tt class="docutils literal"><span class="pre">repository_oauth_access_token_secret</span> <span class="pre">=</span> <span class="pre">models.CharField(max_length=200,</span> <span class="pre">null=True,</span> <span class="pre">blank</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">verbose_name=&quot;OAuth</span> <span class="pre">Token</span> <span class="pre">Secret&quot;,</span> <span class="pre">validators=[validate_not_spaces,</span> <span class="pre">validate_alphanumeric])</span></tt></dt>
+<dd><p class="first last">Used to verify the repository_oauth_access_token</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>ssh_host_alias: <tt class="docutils literal"><span class="pre">ssh_host_alias</span> <span class="pre">=</span> <span class="pre">models.CharField(max_length=200,</span> <span class="pre">null=True,</span> <span class="pre">blank</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">verbose_name=&quot;SSH</span> <span class="pre">Host</span> <span class="pre">Alias&quot;,</span> <span class="pre">validators=[validate_not_spaces,</span> <span class="pre">validate_exclude_space])</span></tt></dt>
+<dd><p class="first last">The alias name for the SSH host to be used for pushing the project with Bitbucket</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>test_repository_slug: <tt class="docutils literal"><span class="pre">test_repository_slug</span> <span class="pre">=</span> <span class="pre">models.CharField(max_length=200,</span> <span class="pre">null=True,</span> <span class="pre">verbose_name=&quot;Test</span> <span class="pre">Repository</span> <span class="pre">Slug&quot;,</span> <span class="pre">validators=[validate_not_spaces,</span> <span class="pre">validate_slug])</span></tt></dt>
+<dd><p class="first last">The slug which will be used to identify the project in the Bitbucket URL, once it is pushed.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>projects_working_directory: <tt class="docutils literal"><span class="pre">projects_working_directory</span> <span class="pre">=</span> <span class="pre">models.CharField(max_length=200,</span> <span class="pre">null=True,</span> <span class="pre">verbose_name=&quot;Projects</span> <span class="pre">Working</span> <span class="pre">Directory&quot;,</span> <span class="pre">help_text=HELP_TEXT_HOME,</span> <span class="pre">validators=[validate_not_spaces])</span></tt></dt>
+<dd><p class="first last">The local directory by which the project will be used</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>default_project_folder_name: <tt class="docutils literal"><span class="pre">default_project_folder_name</span> <span class="pre">=</span> <span class="pre">models.CharField(max_length=200,</span> <span class="pre">null=True,</span> <span class="pre">verbose_name=&quot;Default</span> <span class="pre">Project</span> <span class="pre">Folder</span> <span class="pre">Name</span> <span class="pre">(to</span> <span class="pre">be</span> <span class="pre">replaced)&quot;,</span> <span class="pre">validators=[validate_not_spaces,</span> <span class="pre">validate_exclude_space])</span></tt></dt>
+<dd><p class="first last">The default name of the project folder</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Jira Project Management:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>jira_key: <tt class="docutils literal"><span class="pre">jira_key</span> <span class="pre">=</span> <span class="pre">models.TextField(null=True,</span> <span class="pre">blank</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">verbose_name=&quot;Jira</span> <span class="pre">Key&quot;,</span> <span class="pre">validators=[validate_not_spaces,</span> <span class="pre">validate_alphanumeric])</span></tt></dt>
+<dd><p class="first last">The specific project key to be used by JIRA to identify the project space</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Redmine Project Management:</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>redmine_key: <tt class="docutils literal"><span class="pre">redmine_key</span> <span class="pre">=</span> <span class="pre">models.CharField(max_length=200,</span> <span class="pre">null=True,</span> <span class="pre">blank</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">verbose_name=&quot;API</span> <span class="pre">Access</span> <span class="pre">Key&quot;,</span> <span class="pre">validators=[validate_not_spaces,</span> <span class="pre">validate_alphanumeric])</span></tt></dt>
+<dd><p class="first last">The specific project key to be used by Redmine to identify the project space</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>redmine_url: <tt class="docutils literal"><span class="pre">redmine_url</span> <span class="pre">=</span> <span class="pre">models.URLField(null=True,</span> <span class="pre">blank</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">verbose_name=&quot;Redmine</span> <span class="pre">Environment</span> <span class="pre">URL&quot;,</span> <span class="pre">validators=[validate_not_spaces])</span></tt></dt>
+<dd><p class="first last">The URL of the Redmine account of the user, where the project space will be created</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<p><strong>Constants:</strong></p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>HELP_TEXT_HOME: <tt class="docutils literal"><span class="pre">HELP_TEXT_HOME</span> <span class="pre">=</span> <span class="pre">&quot;This</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">directory</span> <span class="pre">under</span> <span class="pre">$HOME</span> <span class="pre">(/home/username/)&quot;</span></tt></dt>
+<dd><p class="first last">Default string message, indicating the Home directory</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="module-profiles.urls">
+<span id="profiles-urls-module"></span><h2>profiles.urls module<a class="headerlink" href="#module-profiles.urls" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>profiles.urls.py*</strong> files involves URL patterns, attached to the URL pattern settings/</p>
+<dl class="docutils">
+<dt><strong>URL Patterns:</strong></dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">url(r'^$',</span> <span class="pre">'settings',</span> <span class="pre">name='settings')</span></tt></dt>
+<dd><p class="first last">Redirects to the page where the user can view the current settings</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">url(r'^edit/(?P&lt;pk&gt;[-_\w]+)$',</span> <span class="pre">'settings_edit',</span> <span class="pre">name='settings_edit')</span></tt></dt>
+<dd><p class="first last">Redirects to the page where the user can update the current settings</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="module-profiles.validators">
+<span id="profiles-validators-module"></span><h2>profiles.validators module<a class="headerlink" href="#module-profiles.validators" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>profiles.validators.py</strong> file involves specific methods that validates the input entered into the Settings field (through Edit Settings) if it meets minimum requirements.</p>
+<dl class="function">
+<dt id="profiles.validators.validate_alphanumeric">
+<tt class="descclassname">profiles.validators.</tt><tt class="descname">validate_alphanumeric</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="_modules/profiles/validators.html#validate_alphanumeric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#profiles.validators.validate_alphanumeric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the input only includes alphanumeric characters.</p>
+<dl class="docutils">
+<dt><strong>Arguments:</strong></dt>
+<dd><ul class="first last simple">
+<li>value: the string input in the field.</li>
+</ul>
+</dd>
+<dt><strong>Raises:</strong></dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Validation Error:</dt>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">Must</span> <span class="pre">only</span> <span class="pre">be</span> <span class="pre">in</span> <span class="pre">alphanumeric</span> <span class="pre">characters</span></tt></p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="profiles.validators.validate_exclude_space">
+<tt class="descclassname">profiles.validators.</tt><tt class="descname">validate_exclude_space</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="_modules/profiles/validators.html#validate_exclude_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#profiles.validators.validate_exclude_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the input does not contain any whitespaces</p>
+<dl class="docutils">
+<dt><strong>Arguments:</strong></dt>
+<dd><ul class="first last simple">
+<li>value: the string input in the field.</li>
+</ul>
+</dd>
+<dt><strong>Raises:</strong></dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Validation Error:</dt>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">Must</span> <span class="pre">not</span> <span class="pre">include</span> <span class="pre">whitespaces</span></tt></p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="profiles.validators.validate_not_spaces">
+<tt class="descclassname">profiles.validators.</tt><tt class="descname">validate_not_spaces</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="_modules/profiles/validators.html#validate_not_spaces"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#profiles.validators.validate_not_spaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the input is not all whitespaces</p>
+<dl class="docutils">
+<dt><strong>Arguments:</strong></dt>
+<dd><ul class="first last simple">
+<li>value: the string input in the field.</li>
+</ul>
+</dd>
+<dt><strong>Raises:</strong></dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Validation Error:</dt>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">All</span> <span class="pre">whitespaces</span> <span class="pre">are</span> <span class="pre">not</span> <span class="pre">valid.</span></tt></p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="profiles-views-module">
+<h2>profiles.views module<a class="headerlink" href="#profiles-views-module" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="profiles.views.SettingsEditView">
+<em class="property">class </em><tt class="descclassname">profiles.views.</tt><tt class="descname">SettingsEditView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/profiles/views.html#SettingsEditView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#profiles.views.SettingsEditView" title="Permalink to this definition">¶</a></dt>
+<dd><p>This process the Web request of editing the current fields in the Profiles model, thus updating the current user settings.</p>
+<dl class="docutils">
+<dt><strong>Arguments:</strong></dt>
+<dd><ul class="first last simple">
+<li>LoginRequiredMixin: A mixin meant to redirect to the Login Page, once the user was not yet authenticated</li>
+<li>UpdateView: A generic view, imported from django.views.generic, meant to edit details of the Profiles model</li>
+</ul>
+</dd>
+<dt><strong>Fields:</strong></dt>
+<dd><ul class="first last simple">
+<li>model: <tt class="docutils literal"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Settings</span></tt></li>
+<li>template_name: <tt class="docutils literal"><span class="pre">template_name</span> <span class="pre">=</span> <span class="pre">'*profiles/settings_update.html*'</span></tt></li>
+<li>login_url: <tt class="docutils literal"><span class="pre">login_url</span> <span class="pre">=</span> <span class="pre">'*/login/*'</span></tt></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="profiles.views.SettingsEditView.get_success_url">
+<tt class="descname">get_success_url</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/profiles/views.html#SettingsEditView.get_success_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#profiles.views.SettingsEditView.get_success_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the display for the edited user settings.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="profiles.views.SettingsView">
+<em class="property">class </em><tt class="descclassname">profiles.views.</tt><tt class="descname">SettingsView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/profiles/views.html#SettingsView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#profiles.views.SettingsView" title="Permalink to this definition">¶</a></dt>
+<dd><p>This process the Web request of presenting the current user settings.</p>
+<dl class="docutils">
+<dt><strong>Arguments:</strong></dt>
+<dd><ul class="first last simple">
+<li>LoginRequiredMixin: A mixin meant to redirect to the Login Page, once the user was not yet authenticated</li>
+<li>DetailView: A generic view, imported from django.views.generic, meant to display details of the Profiles model</li>
+</ul>
+</dd>
+<dt><strong>Fields:</strong></dt>
+<dd><ul class="first last simple">
+<li>model: <tt class="docutils literal"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Settings</span></tt></li>
+<li>context_object_name: <tt class="docutils literal"><span class="pre">context_object_name</span> <span class="pre">=</span> <span class="pre">'*admin_settings*'</span></tt></li>
+<li>template_name: <tt class="docutils literal"><span class="pre">template_name</span> <span class="pre">=</span> <span class="pre">'*profiles/settings_detail.html*'</span></tt></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="profiles.views.SettingsView.get_object">
+<tt class="descname">get_object</tt><big>(</big><em>queryset=None</em><big>)</big><a class="reference internal" href="_modules/profiles/views.html#SettingsView.get_object"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#profiles.views.SettingsView.get_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the object containing the settings information from the Database</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+<div id="sourcelink">
+  <a href="_sources/profiles.txt"
+     rel="nofollow">Source</a>
+</div>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Ingenuity.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

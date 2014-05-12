@@ -1,0 +1,19 @@
+{% load project_extras %}
+
+<!-- Recently Created Projects (All) -->
+{% display_latest as latest_projects %}
+{% with glyphicon_name="time" list_title="Recently Added Projects" %}
+{% include "latest_projects_shortlist.html" %}
+{% endwith %}
+
+<!-- Recently Created Projects (Web) -->
+{% display_latest_web as latest_projects %}
+{% with glyphicon_name="globe" list_title="Recent Web Projects" %}
+{% include "latest_projects_shortlist.html" %}
+{% endwith %}
+
+<!-- Recently Created Projects (Mobile) -->
+{% display_latest_mobile as latest_projects %}
+{% with glyphicon_name="phone" list_title="Recent Mobile Projects" %}
+{% include "latest_projects_shortlist.html" %}
+{% endwith %}

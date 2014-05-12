@@ -1,0 +1,50 @@
+.section-container {
+    padding-top: 30px;
+}
+
+.error-section {
+    margin-bottom: 30px;
+}
+
+.custom-radio-container {
+    display: block;
+    width: 100%;
+}
+
+.custom-radio {
+    float: left;
+    margin-right: 20px;
+}
+
+.radioButton{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+    width: 250px;
+    height: 70px;
+    text-align: center;
+    padding: 10px 10px 0px 10px;
+}
+
+.radioButtonOff { 
+    background: #cccccc;
+    border: 2px solid #999999;
+    color: #000000;
+}
+
+.radioButtonHover { 
+    background: #666666;
+}
+
+.radioButtonOn { 
+    background: #666666;
+    border: 2px solid #555555;
+    color: #ffffff;
+}
+
+#id_setup_option li {
+    list-style: none;
+}

@@ -1,0 +1,54 @@
+{% load project_extras %}
+
+{% if  status_model.is_success %}
+    <!-- Redmine Project Space successfully created -->
+    {% set setup_success = True %}
+    {% set display_type = "primary" %}
+{% elif status_model.is_failed %}
+    <!-- Redmine Project Space failed (F) or did not finish (W) -->
+    {% set setup_failed = True %}
+    {% set display_type = "danger" %}
+{% elif status_model.is_skipped %}
+    <!-- Redmine Project Space creation skipped (S) or did not process (N) -->
+    {% set setup_skipped = True %}
+    {% set display_type = "primary" %}
+{% endif %}
+<div class="panel panel-{{display_type}}">
+    <div class="panel-heading">
+        <h3 class="panel-title">{% block panel_title %}{% endblock %}</h3>
+    </div>
+    <div class="panel-body">
+        <form role="form" action="#" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="project_id" value="{{project.id}}"/>
+            <input type="hidden" name="project_slug" value="{{project.slug}}"/>
+            <input type="hidden" name="setup_type" value="{% block setup_type %}{% endblock %}"/>
+            {% if setup_success %}
+                {% block succes_details %}
+                {% endblock %}
+            {% elif setup_failed %}
+                <p class="text-danger">{% block failed_message %}{% endblock %}</p>
+                {% if status_model.remarks %}
+                <p class="text-danger"><em>{{ status_model.remarks }}</em></p>
+                {% endif %}
+                {% comment %}
+                    <!-- Cancel to skip creation -->
+                    <button type="button" class="btn btn-default btn-xs">
+                        <span class="glyphicon glyphicon-remove"></span>&nbsp;Cancel
+                    </button>
+                {% endcomment %}
+                <!-- Retry to attempt creation again -->
+                <button type="submit" class="btn btn-danger btn-xs">
+                    <span class="glyphicon glyphicon-repeat"></span>&nbsp;Retry
+                </button>
+            {% elif setup_skipped %}
+                <p class="text-default">{% block create_message %}{% endblock %}</p>
+                <!-- Create -->
+                <button type="submit" class="btn btn-primary btn-xs">
+                    <span class="glyphicon glyphicon-ok"></span>&nbsp;Create
+                </button>
+            {% endif %}
+        </form>
+    </div>
+</div>
+

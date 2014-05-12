@@ -1,0 +1,105 @@
+body { 
+    padding-top: 60px; 
+}
+
+.navbar-brand img {
+    width: 30px;
+    height: 30px;
+}
+
+.footer-container {
+    background: #303439;
+    margin-top: 80px;
+    padding: 80px 0;
+    width: 100%;
+    color: #afafaf;
+}
+
+.footer-icons {
+    margin-top: 20px;
+}
+
+.footer-icons li {
+    display: inline-block;
+}
+
+.footer-icons li a {
+    text-indent: -9999px;
+    display: block;
+    width: 37px;
+    height: 39px;
+    background: url("../images/footer-icons.png") no-repeat;
+}
+
+#facebook-icon {
+    background-position: 0 0;
+}
+
+#facebook-icon:hover {
+    background-position: 0 -39px;
+}
+
+#linked-icon {
+    background-position: -37px 0;
+}
+
+#linked-icon:hover {
+    background-position: -37px -39px;
+}
+
+#twitter-icon {
+    background-position: -74px 0;
+}
+
+#twitter-icon:hover {
+    background-position: -74px -39px;
+}
+
+.fb-like {
+    margin: 10px 0 0 0;
+}
+
+.copyright-section {
+    position: relative;
+    background: #1d1d1d;
+    height: 50px;
+    width: 100%;
+    padding: 15px 0;
+    color: #838383;
+}
+
+.page-header {
+    margin-bottom: 0;
+}
+
+.page-header-controls {
+    text-align: right;
+    padding-top: 21px;
+    padding-bottom: 10.5px;
+}
+
+.alert-hidden {
+    display: none;
+}
+
+@media (min-width: 768px) {
+
+    .jumbotron {
+        padding-top: 12px;
+        padding-left: 60px;
+        padding-right: 60px;
+        background: url("../images/banner.jpg") no-repeat center;
+        background-size: 100% auto;
+    }
+
+    .text-overlay {
+        background: rgba(255, 255, 255, 0.4) 
+    }
+
+}
+
+@media (min-width: 950px) {
+    .jumbotron {
+        height: 500px;
+    }
+}

@@ -1,0 +1,11 @@
+{% extends "site_base.html" %}
+
+{% block page_header_title %}ERROR 404:<br>
+<font size = 5>The page {{request.path}} you are trying to access does not exist.</font>
+{% endblock %}
+
+{% block content %}
+
+<h2><font size = 2><a href="javascript:history.go(-1)">GO BACK TO PREVIOUS PAGE</a></font></h2>
+
+{% endblock %}
