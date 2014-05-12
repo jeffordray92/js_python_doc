@@ -325,16 +325,15 @@ PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
 
 # These will be added to ``INSTALLED_APPS``, only if available.
 OPTIONAL_APPS = (
-    "debug_toolbar",
     "django_extensions",
     "compressor",
     PACKAGE_NAME_FILEBROWSER,
     PACKAGE_NAME_GRAPPELLI,
 )
 
-DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
+#DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
 
-DEBUG_TOOLBAR_PATCH_SETTINGS = True
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 ###################
 # DEPLOY SETTINGS #

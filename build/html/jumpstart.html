@@ -87,7 +87,7 @@
 <li><a class="reference internal" href="#module-jumpstart.forms">jumpstart.forms module</a></li>
 <li><a class="reference internal" href="#module-jumpstart.tests">jumpstart.tests module</a></li>
 <li><a class="reference internal" href="#module-jumpstart.urls">jumpstart.urls module</a></li>
-<li><a class="reference internal" href="#jumpstart-views-module">jumpstart.views module</a></li>
+<li><a class="reference internal" href="#module-jumpstart.views">jumpstart.views module</a></li>
 <li><a class="reference internal" href="#module-jumpstart.wsgi">jumpstart.wsgi module</a></li>
 </ul>
 </li>
@@ -291,9 +291,28 @@
 </dd>
 </dl>
 </div>
-<div class="section" id="jumpstart-views-module">
-<h2>jumpstart.views module<a class="headerlink" href="#jumpstart-views-module" title="Permalink to this headline">¶</a></h2>
-<span class="target" id="module-jumpstart.views"></span><p>The <strong>jumpstart.views.py</strong> file involves classes that take a Web request and return a Web response.</p>
+<div class="section" id="module-jumpstart.views">
+<span id="jumpstart-views-module"></span><h2>jumpstart.views module<a class="headerlink" href="#module-jumpstart.views" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>jumpstart.views.py</strong> file involves classes that take a Web request and return a Web response.</p>
+<dl class="class">
+<dt id="jumpstart.views.Wiki_View">
+<em class="property">class </em><tt class="descclassname">jumpstart.views.</tt><tt class="descname">Wiki_View</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/jumpstart/views.html#Wiki_View"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.views.Wiki_View" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">django.views.generic.base.TemplateView</span></tt></p>
+<p>This process the Web request of viewing the Wiki Page</p>
+<dl class="docutils">
+<dt><strong>Returns:</strong></dt>
+<dd><ul class="first last simple">
+<li>Redirects to <tt class="docutils literal"><span class="pre">wiki/index.html</span></tt></li>
+</ul>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="jumpstart.views.Wiki_View.template_name">
+<tt class="descname">template_name</tt><em class="property"> = u'wiki/index.html'</em><a class="headerlink" href="#jumpstart.views.Wiki_View.template_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="class">
 <dt id="jumpstart.views.HomePageView">
 <em class="property">class </em><tt class="descclassname">jumpstart.views.</tt><tt class="descname">HomePageView</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/jumpstart/views.html#HomePageView"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#jumpstart.views.HomePageView" title="Permalink to this definition">¶</a></dt>

@@ -42,7 +42,7 @@ jumpstart.views module
 ----------------------
 
 .. automodule:: jumpstart.views
-    :members: view_wiki
+    :members: Wiki_View
     :undoc-members:
     :show-inheritance:
 

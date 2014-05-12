@@ -213,7 +213,7 @@
 <span class="n">logout</span> <span class="o">=</span> <span class="n">LogoutView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()</span>
 
 
-<span class="k">class</span> <span class="nc">Wiki_View</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+<div class="viewcode-block" id="Wiki_View"><a class="viewcode-back" href="../../jumpstart.html#jumpstart.views.Wiki_View">[docs]</a><span class="k">class</span> <span class="nc">Wiki_View</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This process the Web request of viewing the Wiki Page</span>
 
 <span class="sd">    **Returns:**</span>
@@ -221,7 +221,7 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">template_name</span> <span class="o">=</span> <span class="s">u&quot;wiki/index.html&quot;</span>
-
+</div>
 <span class="n">wiki</span> <span class="o">=</span> <span class="n">Wiki_View</span><span class="o">.</span><span class="n">as_view</span><span class="p">()</span>
 
 <span class="k">class</span> <span class="nc">errorview</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
